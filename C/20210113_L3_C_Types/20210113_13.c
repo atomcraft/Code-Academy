@@ -15,17 +15,17 @@ int main(){
 
     printf("Enter value of a: ");
     scanf("%c", &a);
-    printf("%c\n", a);
+    printf("%c\n", sizeof(a));
     printf("Enter value of b: ");
     scanf("%d", &b);
-    printf("%d\n", b);
+    printf("%d\n", sizeof(b));
     printf("Enter value of c: ");
     scanf("%ld", &c);
-    printf("%ld\n", c);
+    printf("%ld\n", sizeof(c));
     printf("Enter value of d: ");
     scanf("%f", &d);
-    printf("%0.1f\n", d);
+    printf("%0.1f\n", sizeof(d));
     printf("Enter value of e: ");
     scanf("%lf", &e);
-    printf("%0.3f\n", e);
+    printf("%0.3f\n", sizeof(e));
 }
