@@ -1,19 +1,16 @@
 #include <stdio.h>
 
-int main(){
-    int nX;
-    printf("Enter a number: ");
-    scanf("%d", &nX);
-    int nY = 20;
-    if (nX == nY){
-        printf("%d and %d are equal\n", nX, nY);        
+int main(void){
+    int nA;
+    printf("Enter a number for nA: ");
+    scanf("%d", &nA);
+    int nB = ( nA == 1 ? 2 : 0 );
+    printf("A value is %d\n", nA);
+    printf("B value is %d\n", nB);
+    if (nA == nB){
+         printf("A is equal to B.\n");
     } else{
-        printf("%d and %d are not equal\n", nX, nY);
-    }
-    if (nX > nY){
-        printf("%d is greater than %d\n", nX, nY);
-    } else{
-        printf("%d is less than %d\n", nX, nY);
-    }
-    return 0;  
+        nA > nB ? printf("A is bigger than B.\n") : printf("B is bigger than A.\n");
+    }   
+    return 0;
 }

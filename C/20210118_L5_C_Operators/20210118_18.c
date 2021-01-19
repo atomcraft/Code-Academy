@@ -1,13 +1,36 @@
 #include <stdio.h>
+#include <unistd.h>
+
+unsigned int sleep(unsigned int seconds);
+
+void runningLight(int num[]){
+    int arr[32];
+    int index = 0;
+    int rem = 0;
+    int space = 0;
+
+    while (num[index] > 0){
+        int temp = num[index];
+        rem = temp % 2;
+        for (int i = 0; i <= rem; i++){
+            if (rem == 1){
+                for (int j = 0; j < space; j++){
+                     printf(" ");
+            
+                }        
+                printf("*");
+                printf("\n");
+                space++;
+                sleep(10);
+            }           
+        }        
+        temp /= 2;
+        index++;
+    }
+}
 
 int main(void){
-    int nA;
-    printf("Enter a number for nA: ");
-    scanf("%d", &nA);
-    int nB = ( nA == 1 ? 2 : 0 );
-    printf("A value is %d\n", nA);
-    printf("B value is %d\n", nB);
-    nA > nB ? printf("A is bigger than B.") : printf("B is bigger than A.");
-    
+    int num[] = { 1, 2, 3, 4};
+    runningLight(num);
     return 0;
 }
