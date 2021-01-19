@@ -4,7 +4,6 @@
 unsigned int sleep(unsigned int seconds);
 
 void runningLight(int num[]){
-    int arr[32];
     int index = 0;
     int rem = 0;
     int space = 0;
@@ -16,12 +15,11 @@ void runningLight(int num[]){
             if (rem == 1){
                 for (int j = 0; j < space; j++){
                      printf(" ");
-            
                 }        
                 printf("*");
                 printf("\n");
                 space++;
-                sleep(10);
+                sleep(5);
             }           
         }        
         temp /= 2;
