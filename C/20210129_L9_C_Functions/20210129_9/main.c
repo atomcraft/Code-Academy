@@ -1,22 +1,11 @@
 #include <stdio.h>
-#include <math.h>
-
-int add(int a, int b);
-int powOfTwo(int num);
-int sqroot (int num);
+#include "f.h"
 
 int main(void){
-    int num1 = 0, num2 = 0;
-    printf("Enter the first number: ");
-    scanf("%d", &num1);
-    printf("Enter the second number: ");
-    scanf("%d", &num2);
-    add(num2, num2);
+    double num = 0.0L;
+    printf("Enter a number: ");
+    scanf("%lf", &num);
+    float rez = sqRoot(num);
+    printf("\nResult: %0.3lf\n", rez);
     return 0;
 }
-
-int add(int a, int b){
-    return a + b;
-}
-int powOfTwo(int num);
-int sqroot (int num);

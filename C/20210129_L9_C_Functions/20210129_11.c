@@ -11,7 +11,7 @@ int main(void){
     }
     return 0;    
 }
-
+/*Look for a commented text of quotation*/
 void readComment(int c){
     int d;
     if (c == '/'){
@@ -30,7 +30,7 @@ void readComment(int c){
         putchar(c);
     }    
 }
-
+/*Found commented text, look for the closing parameter*/
 void insideComment(void){
     int c, d;
     c = getchar();
@@ -40,7 +40,7 @@ void insideComment(void){
         d = getchar();
     }
 }
-
+/*Print the quoted text*/
 void printQuoted(int c){
     int d;
     putchar(c);

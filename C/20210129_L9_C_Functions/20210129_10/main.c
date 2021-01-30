@@ -1,67 +1,25 @@
 #include <stdio.h>
-#include <math.h>
-
-int leastCommMultiple( int a, int b);
-float absoluteValue(float num);
-float sqroot(float num);
+#include "f.h"
 
 int main(void){
-    float a = 0.0F;
-    float b = 0.0F;
-    int num1 = 10;
-    int num2 = 25;
-    printf("Enter number A: ");
-    scanf("%f", &a);
-    printf("Enter number B: ");
-    scanf("%f", &b);
-    // float abs = absoluteValue(a);
-    // printf("A: %f\n", abs);
-    // printf("Sqrt of a: %f\n", sqroot(a));
-    printf("\n");
-    leastCommMultiple(num1, num2);
-    printf("\n");
-    float sqrtRzs = sqroot(a);
-    if (sqrtRzs < 0){
-        a = absoluteValue(a);
-        printf("Sqrt of a: %f\n", sqroot(a));
+    float fNumA = 0.0F;
+    float fNumB = 0.0F;
+    int iNum1 = 0;
+    int iNum2 = 0;
+    printf("Enter number 1: ");
+    scanf("%d", &iNum1);
+    printf("Enter number 2: ");
+    scanf("%d", &iNum2);
+    int lcmNum1Num2 = leastCommMultiple(iNum1, iNum2);
+    printf("\nThe least common multiplier between num1 and num2 is: %d\n", lcmNum1Num2);
+    printf("Enter a floating number: ");
+    scanf("%f", &fNumA);
+    float sqrtRzs = sqRoot(fNumA);
+    if (sqrtRzs == -1){
+        float absA = absoluteValue(fNumA);
+        printf("Sqrt of the floating number: %f\n", sqRoot(absA));
     } else{
-        printf("Sqrt of a: %f\n", sqrtRzs);
+        printf("Sqrt of the floating number: %f\n", sqrtRzs);
     }
-    
-    
     return 0;
-}
-
-int leastCommMultiple( int a, int b){
-    int num1, num2, lcm, temp, gcd;
-    num1 = a;
-    num2 = b;
-    while (num2 != 0) {
-        temp = num2;
- 	    num2 = num1 % num2;
- 	    num1 = temp;
-    }
-    gcd = num1;
-    printf("GCD of %d and %d = %d \n", a, b, gcd);
-    
-    lcm = (a * b) / gcd;
-    printf("LCM of %d and %d = %d", a, b, lcm);
-    return lcm;
-
-}
-
-float absoluteValue(float num){
-    if (num < 0){
-        num = -num;
-    }
-    return num;    
-}
-
-float sqroot(float num){
-    if (num < 0){
-        return -1;
-    } else{
-        num = absoluteValue(num);
-        return sqrt(num);
-    }    
 }
