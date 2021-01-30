@@ -11,7 +11,7 @@ int main(void){
     }
     return 0;    
 }
-/*Look for a commented text of quotation*/
+/*Look for a commented text or quotation*/
 void readComment(int c){
     int d;
     if (c == '/'){
