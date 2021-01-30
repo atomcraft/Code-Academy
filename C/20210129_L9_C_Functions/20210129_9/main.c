@@ -5,7 +5,7 @@ int main(void){
     double num = 0.0L;
     printf("Enter a number: ");
     scanf("%lf", &num);
-    float rez = sqRoot(num);
+    double rez = sqRoot(num);
     printf("\nResult: %0.3lf\n", rez);
     return 0;
 }
