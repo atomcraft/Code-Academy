@@ -7,7 +7,7 @@ int fillBarcodeArr(int *x);
 
 int main(void){
     int barcode[ARRAY_SIZE];
-    int i, lastDigit, checkDigit, odd, even, totalSum;
+    int i, checkDigit, odd, even, totalSum;
     if(fillBarcodeArr(barcode)){
         printf("\nYou entered the code: ");
         for(i=0; i<ARRAY_SIZE; i++){
