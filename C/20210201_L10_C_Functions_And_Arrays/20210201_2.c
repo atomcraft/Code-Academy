@@ -13,27 +13,28 @@
 */
 
 #include <stdio.h>
+#include <ctype.h>
 
 double atof(char *s);
 
 int main(void){
-    char s[] = "123.456";
-    printf("Result: %d", atof(s));
+    char s[8] = "1234.56";
+    double rez = atof(s);
+    printf("Result: %f", rez);
     return 0;
 }
 
-double atof(char *s){
-    int i, power, j;
-    power = 1;
-    double n = 0.0L;
-    for (i = 0; s[i] >= '0' && s[i] <= '9'; i++){
-        if (s[i] == '.'){
-            for (j = 0; s[j] >= '0' && s[j] <= '9'; i++){
-                n = 10 * n + (s[j] - '0');
-                power *= 10;
-            }
-        }
-        n = 10 * n + (s[j] - '0');
+double atof(char s[])
+{
+    double val, power;
+    int i;
+    for (val = 0.0; isdigit(s[i]); i++)
+        val = 10.0 * val + (s[i] - '0');
+    if (s[i] == '.')
+        i++;
+    for (power = 1.0; isdigit(s[i]); i++) {
+        val = 10.0 * val + (s[i] - '0');
+        power *= 10;
     }
-    return n/power;    
+    return val / power;
 }

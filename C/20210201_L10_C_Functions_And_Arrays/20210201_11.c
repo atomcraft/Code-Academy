@@ -17,9 +17,11 @@ int main(void){
 }
 
 void squeeze(char s[], int c){
-    for (int i = 0; s[i] != '\0'; i++){
-        if (s[i] == c){
-            s[i] = s[i+1];
+    int i, j;
+    for (i = 0; s[i] != '\0'; i++){
+        if (s[i] != c){
+            s[j++] = s[i];
         }
     }
+    s[j] = '\0';
 }

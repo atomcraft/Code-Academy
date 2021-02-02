@@ -1,3 +1,8 @@
+
+/*
+Задача 5. Рекурсивна функция
+*/
+
 #include <stdio.h>
 
 int RecursiveFun(int nA, int nB){
