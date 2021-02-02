@@ -11,7 +11,7 @@
 double atof(char *s);
 
 int main(void){
-    char s[8] = "1234.56";
+    char s[8] = "-1234.56";
     double rez = atof(s);
     printf("Result: %f", rez);
     return 0;
