@@ -19,7 +19,7 @@ void sort ( int a[], int n){
     int i, j, temp;
     int *pI = &a[0];
     int *pJ = &a[1];
-    for ( ; *pI < n-1; pI++){
+    for ( ; *pI < n-1; *pI++){
         for ( ; *pJ < n; ++pJ){
             if ( *pI > *pJ ){
                 temp = *pI;

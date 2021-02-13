@@ -44,8 +44,8 @@ int main(void){
         }
     };
     for (int i = 0; i < 5; i++){
+        /*printf("Array %d\n", i);*/
         for (int j = 0; j < 5; j++){
-            /*printf("Array %d\n", i);*/
             for (int k = 0; k < 5; k++){
                 printf("%d ", arr[i][j][k]);
             }
