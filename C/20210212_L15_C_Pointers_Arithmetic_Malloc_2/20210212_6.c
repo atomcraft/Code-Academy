@@ -11,14 +11,15 @@ realloc().
 #include <stdlib.h>
 
 int main(void) {
-    char *a = NULL;
     char size = 2;
+    char *a = (char*)malloc(size * sizeof(char));
     char count = 0;
+    char ctrZ = 26;
     int c;
-    while ((c = getchar()) != EOF && c != '\n') {
+    while ((c = getchar()) != '\n') {
         if (count >= size) {
             /* reallocate the buffer to 1.5x size */
-            char newsize = size + size / 2 + 16;
+            char newsize = (size + size / 2) + sizeof(char);
             char *new_a = realloc(a, newsize);
             if (new_a == NULL) {
                 printf("out of memory");
@@ -32,8 +33,9 @@ int main(void) {
     }
 
     for (int i = 0; i < count; i++) {
-        putchar(a[i]);
+        printf("%c", a[i]);
     }
+    printf("\n");
     free(a);
     return 0;
 }

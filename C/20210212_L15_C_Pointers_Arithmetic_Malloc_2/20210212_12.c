@@ -9,102 +9,93 @@
 #include <ctype.h>
 #include <string.h>
 
+#define MAX 100
+
 void participantsEntry();
 void participantsDisplay();
-void namesSort(int );
-void memAllocate(char *s);
-void memReAllocate(char *s);
+void namesSort();
 
-const char buffer = 64;
-int number[100]; 
-int age[100];
-char *firstName = NULL;
-char *fNameArr;
-char *lNameArr;
-char *lastName = NULL;
-char answer;
+const char buffer = 16;
+int pNumber[MAX]; 
+int pAge[MAX];
+char firstName[20];
+char lastName[20];
+char *pFirstName[MAX];
+char *pLastName[MAX];
+int counter = 0;
 
 int main(void){
-    memAllocate(fNameArr);
-    memAllocate(lNameArr);
     participantsEntry();
-    int sizeArr = sizeof(fNameArr) / sizeof(fNameArr[0]);
-    namesSort(sizeArr);
+    void namesSort();
     participantsDisplay();
     return 0;
 }
 
 void participantsEntry(){
-    int i = 0;
+    char c;
+    char answer;
     do
     {
         printf("Enter the first name of the participant: ");
-        scanf("%d", firstName);
-        fNameArr[i] = *firstName;
-        if (buffer < strlen(fNameArr)){
-            memReAllocate(fNameArr);
+        scanf("%s", &firstName);
+        pFirstName[counter] = (char*) malloc(strlen(firstName) + 1);
+        if(NULL == pFirstName[counter]){
+            printf("Allocation memory error!\n");
+            exit(1);
         }
-        memAllocate(lastName);
+        strcpy(pFirstName[counter], firstName);
         printf("Enter the last name of the participant: ");
-        scanf("%d", lastName);
-        lNameArr[i] = *lastName;
-        if (buffer < strlen(lNameArr)){
-            memReAllocate(lNameArr);
+        scanf("%s", &lastName);
+        pLastName[counter] = (char*) malloc(strlen(lastName) + 1);
+        if(NULL == pLastName[counter]){
+            printf("Allocation memory error!\n");
+            exit(1);
         }
+        strcpy(pLastName[counter], lastName);
         printf("Enter the age of the participant: ");
-        scanf("%d", &age[i]);
+        scanf("%d", &pAge[counter]);
         printf("Enter the number of the participant: ");
-        scanf("%s", &number[i]);
+        scanf("%d", &pNumber[counter]);
         getchar();
         printf("Would you like to enter another participant? Answer with y for yes.");
         scanf("%c", &answer);
-        i++;       
+        counter++;       
     } while (tolower(answer) == 'y');
 
 }
 
 void participantsDisplay(){
-    for (int i = 0, n = strlen(fNameArr); i < n; i++){
-        printf("First name of the participant: %s", fNameArr[i]);
-        printf("Second name of the participant: %s", lNameArr[i]);
-        printf("Number of the participant: %d", number[i]);
-        printf("Age of the participant: %d", age[i]);
+    for (int i = 0; i < counter; i++){
+        printf("First name of the participant: %s\n", pFirstName[i]);
+        free(pFirstName[i]);
+        printf("Second name of the participant: %s\n", pLastName[i]);
+        free(pLastName[i]);
+        printf("Number of the participant: %d\n", pNumber[i]);
+        printf("Age of the participant: %d\n", pAge[i]);
     }
 }
 
-void memAllocate(char *s){
-    s = (char*) malloc(buffer * sizeof(char));
-    if(NULL == s){
-        printf("Allocation memory error!\n");
-        exit(1);
-    }
-}
 
-void memReAllocate(char *s){
-    s = realloc(s, (2 * buffer) * sizeof(char));
-    if(NULL == s){
-        printf("Reallocation memory error!\n");
-        exit(2);
-    }
-}
+void namesSort(){
+    char *tempP = NULL;
+    int tempNum, i, j;
 
-void namesSort(int size){
-    int i, j;
-    for(i = 0; i <= size; i++){
-        for(j = i + 1; j <= size; j++){
-            if(strcmp(fNameArr[i],fNameArr[j])>0){
-                char *temp;
-                strcpy(temp,fNameArr[i]);
-                strcpy(fNameArr[i],fNameArr[j]);
-                strcpy(fNameArr[j],temp);
-            }
-            if(strcmp(lNameArr[i],lNameArr[j])>0){
-                char *temp1;
-                strcpy(temp1,lNameArr[i]);
-                strcpy(lNameArr[i],lNameArr[j]);
-                strcpy(lNameArr[j],temp1);
+    for(i = 0; i < counter - 1; i++){
+        for(j = i + 1; j < counter; j++){
+            if(strncmp(pFirstName[i], pFirstName[j], 1) > 0){
+                tempP = pFirstName[j];
+                pFirstName[j] = pFirstName[i];
+                pFirstName[i] = tempP;
+                tempP = pLastName[j];
+                pLastName[j] = pLastName[i];
+                pLastName[i] = tempP;
+                tempNum = pNumber[j];
+                pNumber[j] = pNumber[i];
+                pNumber[i] = tempNum;
+                tempNum = pAge[j];
+                pAge[j] = pAge[i];
+                pAge[i] = tempNum;
             }
         }
     }
-    
 }
