@@ -26,7 +26,7 @@ int counter = 0;
 
 int main(void){
     participantsEntry();
-    void namesSort();
+    namesSort();
     participantsDisplay();
     return 0;
 }
