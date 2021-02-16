@@ -1,26 +1,31 @@
 /*
-Задача 17. Направете същото, както в задача 18., но преди да
-копирате, нулирайте стойността на стринговете, в
-които ще копирате, използвайки готовата функция
-memset. Потърсете онлайн как работи тази функция и
-какви аргументи приема.
-https://www.tutorialspoint.com/c_standard_library/c_functi
-on_memset.htm
+Задача 18. Връщаме се на кода написан в задача 17. Нека сега
+отпечатаме стринговете с
+декрементиране, започвайки отзад-напред.
+*to -- = *from --;
+Проверете готовата функция strlen.
+https://www.tutorialspoint.com/c_standard_library/c_function_strlen.htm
+Помислете как да направите проверка във функцията за копиране, дали
+размерът на стринга, в който копираме, не е по-малък от размера на
+стринга, от който копираме, и какво да се случва тогава
 */
-
 #include <stdio.h>
 #include <string.h>
 
+void fCopyString (char *to, char *from){
+    while (*from){
+        *to -- = *from --;
+    }
+}
+
 int main(void){
-    char *string1 = "A string to be copied";
-    char *string2 = "I am very good in strings coping!";
-    char string3[strlen(string1) + 1];
-    char string4[strlen(string2) + 1];
-    memset(string4, '\0', strlen(string2) + 1);
-    strncpy(string4, string2, strlen(string2) + 1);
-    printf("String 4: %s\n", string4);
-    memset(string3, '\0', strlen(string1) + 1);
-    strncpy(string3, string1, strlen(string1) + 1);
-    printf("String 3: %s\n", string3);
+    char string1[]= "A string to be copied.\0";
+    char string2[22];
+    memset (string2, '\0', sizeof(string2));
+    int len=0;
+    len= strlen(string1);
+    printf("Len: %d", len);
+    fCopyString (&string2 [len-1], &string1 [len-1]);
+    printf ("\n%s\n", string2);
     return 0;
 }

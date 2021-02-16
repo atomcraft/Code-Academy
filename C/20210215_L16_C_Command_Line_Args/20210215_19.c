@@ -1,22 +1,34 @@
 /*
-Задача 19. Дефинирайте стринг: „Baba, kaka, mama” заменете „а“
-със „о“
+Задача 20. Дефинирайте стринг „I am a poor programmer”.
+Заменете през пойнтер “poor” с “great”.
 */
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
-int main(void){
-    char *s = "aba, kaka, mama";
-    int len = strlen(s) + 1;
-    char newString[len];
-    for (int i = 0; i < len; i++){
-        if (s[i] == 'a'){
-            newString[i] = 'o';
-            continue;
-        }else{
-            newString[i] = s[i];
+char *changewords(char *sentence, char *find, char *replace){
+    char *dest = malloc (strlen(sentence)-strlen(find)+strlen(replace)+1);
+    char *destptr = dest;
+    *dest = 0;
+    while (*sentence){
+        if (!strncmp (sentence, find, strlen(find))){
+            strcat (destptr, replace);
+            sentence += strlen(find);
+            destptr += strlen(replace);
+        } else{
+            *destptr = *sentence;
+            destptr++;
+            sentence++;
         }
     }
-    printf("New string: %s\n", newString);
-    return 0;    
+    *destptr = 0;
+    return dest;
+}
+
+int main (void){
+    char *result;
+    result = changewords ("I am a poor programmer","poor","great");
+    printf ("%s\n", result);
+    free (result);
+    return 0;
 }
