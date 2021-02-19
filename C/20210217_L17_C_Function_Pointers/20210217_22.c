@@ -10,8 +10,8 @@
 
 #include <stdio.h>
 
-int is_Array_Sorted(int [], int);
-void bubble_sort(long [], long);
+int isArraySorted(int [], int);
+void bubbleSort(long [], long);
 
 int main(void){
   int a[100], n, c;
@@ -24,12 +24,12 @@ int main(void){
   for (c = 0; c < n; c++)
     scanf("%d", &a[c]);
 
-  if (is_Array_Sorted(a, n))
+  if (isArraySorted(a, n))
     printf("The array is sorted.\n");
   else
     printf("The array isn't sorted.\n");
 
-   bubble_sort(a, n);
+   bubbleSort(a, n);
 
   printf("Sorted list in ascending order:\n");
 
@@ -39,7 +39,7 @@ int main(void){
   return 0;
 }
 
-int is_Array_Sorted(int a[], int n) {
+int isArraySorted(int a[], int n) {
   int c, d, sorted = 1, t;
 
   for (c = 0 ; c < n - 1; c++) {
@@ -55,7 +55,7 @@ int is_Array_Sorted(int a[], int n) {
   return 1;
 }
 
-void bubble_sort(long list[], long n){
+void bubbleSort(long list[], long n){
   long c, d, t;
 
   for (c = 0 ; c < n - 1; c++) {

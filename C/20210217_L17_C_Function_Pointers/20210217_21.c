@@ -100,7 +100,7 @@ array rows are in ascending order on the screen
       }
       chess[r][c] = kmoves;  
       ++kmoves;
-      print_board(chess);
+      printBoard(chess);
       moves = getchar();
  
       //resets
