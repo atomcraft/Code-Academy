@@ -17,7 +17,7 @@ int main(void){
         for (int j = 0; j < 15; j++){
             field[i][j] = '-';
         }
-        
+        printf("\n");         
     }
     for (int i = 0; i < 15; i++){
         for (int j = 0; j < 15; j++){
@@ -43,7 +43,25 @@ int main(void){
         for (int j = 0; j < 15; j++){
             printf("%c ", field[i][j]);
         }
-        
+        printf("\n");        
+    }
+    printf("\n");
+
+    for (int i = 0; i < 15; i++){
+        for (int j = 0; j < 15; j++){
+            if ((i >= a.x && i <= b.x) && (j >= a.y && j <= b.y)){
+                field[i][j] = '@';
+            } 
+            else{
+                field[i][j] = '-';
+            }            
+        }
+    }
+    for (int i = 0; i < 15; i++){
+        for (int j = 0; j < 15; j++){
+            printf("%c ", field[i][j]);
+        }
+        printf("\n");        
     }
     printf("\n");
     return 0;
