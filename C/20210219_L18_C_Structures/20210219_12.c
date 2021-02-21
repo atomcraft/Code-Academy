@@ -17,8 +17,8 @@ struct TPoint makePoint(int x,int y);
 float calcDist(struct TPoint *p1,struct TPoint *p2);
 
 int main(void){
-    struct TPoint p1=makePoint(2,3);
-    struct TPoint p2=makePoint(5,7);
+    struct TPoint p1=makePoint(5,6);
+    struct TPoint p2=makePoint(10,17);
     printf("%.3f",calcDist(&p1, &p2));
     return 0;
 }
