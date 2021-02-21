@@ -14,12 +14,12 @@ struct TPoint{
 };
 
 struct TPoint makePoint(int x,int y);
-float calcDis(struct TPoint *p1,struct TPoint *p2);
+float calcDist(struct TPoint *p1,struct TPoint *p2);
 
 int main(void){
     struct TPoint p1=makePoint(2,3);
     struct TPoint p2=makePoint(5,7);
-    printf("%.3f",calcDis(&p1, &p2));
+    printf("%.3f",calcDist(&p1, &p2));
     return 0;
 }
 
@@ -28,8 +28,8 @@ struct TPoint makePoint(int x,int y){
     return point;
 }
 
-float calcDis(struct TPoint *p1, struct TPoint *p2){
-    int disX,disY;
+float calcDist(struct TPoint *p1, struct TPoint *p2){
+    int distX,distY;
     int x1,x2,y1,y2;
     if(p1->x < p2->x){
         x1=p1->x;
@@ -45,9 +45,9 @@ float calcDis(struct TPoint *p1, struct TPoint *p2){
         y1=p2->y;
         y2=p1->y;
     }
-    disX=x2-x1;
-    disY=y2-y1;
-    float result = sqrt((disX*disX)+(disY*disY));
+    distX=x2-x1;
+    distY=y2-y1;
+    float result = sqrt((distX*distX)+(distY*distY));
     return result;
 }
 
