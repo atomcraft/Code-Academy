@@ -18,11 +18,17 @@ struct point makepoint(int x, int y){
 
 int main(void){
   int len = 10;
-  for (int i = 1; i < len; i++){
-      for (int j = 1; j <= i; j++){
-          printf("*");
-        }  
-       printf("\n");
+  for (int i = 1; i <= len; i++){
+    for (int j = 1; j <= i; j++){
+      printf("*");
     }
+    for (int space = len -1; space >= 1; space--){
+      printf(" ");
+    }
+    for (int x = 1; x <= i; x++){
+      printf("*");
+    }
+    printf("\n");
+  }
   return 0;
 }

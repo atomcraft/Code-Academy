@@ -15,13 +15,15 @@ int main(void){
     struct point b = {7, 10};
     int indx = 0;
     for (int i = 0; i < 15; i++){
-        for (int j = 0; j < 15 - i; j++){
+        for (int j = 0; j < 15; j++){
+            field[i][j] = '-';
+        }         
+    }
+    for (int i = 1; i <= 15; i++){
+        for (int j = 1; j <= i; j++){
             if ((i >= a.x && i <= b.x) && (j >= a.y && j <= b.y)){
                 field[i][j] = symbol;
-            } 
-            else{
-                field[i][j] = '-';
-            }            
+            }         
         }
         indx++;
     }

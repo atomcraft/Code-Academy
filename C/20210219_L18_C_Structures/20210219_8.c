@@ -28,8 +28,8 @@ int main(void){
     struct rect screen;
     screen.p1 = makepoint(0, 0);
     screen.p2 = makepoint(15, 15);
-    for (; screen.p1.x < screen.p2.x; screen.p1.x++){
-        for (; screen.p1.y < screen.p2.y; screen.p1.y++){
+    for (int i = screen.p1.x; i < screen.p2.x; i++){
+        for (int j = screen.p1.y; j < screen.p2.y; j++){
             printf("-");
         }
         printf("\n");        
