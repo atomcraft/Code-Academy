@@ -23,7 +23,7 @@ int main(void){
         for (int j = 0; j < 15; j++){
             printf("%c ", field[i][j]);
         }
-        
+        printf("\n");        
     }
     printf("\n");
     struct point a = {3, 4};
