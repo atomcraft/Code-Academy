@@ -16,8 +16,24 @@ struct myStruct{
 };
 
 enum eMyType{VALUE_INT, VALUE_STR};
+int writeToFile(int count,struct myStruct *data, const char *fileName);
 
 int main(void){
     struct myStruct myStructArr[20];
-    struct myStruct my1 = {1, "yes", 3.3, VALUE_STR};
+    struct myStruct my1 = {1, "yes", 3.3};
+    myStructArr[0] = my1;
+    writeToFile(0, &my1, "file.csv");
+}
+
+int writeToFile(int count,struct myStruct *data, const char *fileName){
+    FILE *f = fopen(fileName, "w");
+    if (f == NULL) 
+          return -1;
+    while (count-- > 0) 
+    {
+          fprintf(f, "%d,%c,%fl", data->m_int, data->m_char, data->m_double);
+          ++data;
+    }
+    fclose(f);
+    return 0;
 }
