@@ -26,13 +26,13 @@
 int main(void){
     int x = 2;
     int y = 3;
-    double result2;
-    int result1;
+    float result2;
+    float result1;
     int result = AVG1(x, y);
     AVG2(1, 4, result1);
     fPow(3.0, 4.0, result2);
-    printf("Power of y: %d\n", result2);
-    printf("AVG2: %d\n", result1);
+    printf("Power of y: %f\n", result2);
+    printf("AVG2: %f\n", result1);
     char c = 'a';
     char toUpResult = toUpper(c);
     printf("ToUpper: %c\n", toUpResult);
