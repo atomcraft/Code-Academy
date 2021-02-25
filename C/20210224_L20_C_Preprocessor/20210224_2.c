@@ -1,3 +1,8 @@
+/*
+2. Напишете макрос swap(t, x, y), койтo променя местата на двата аргумента
+от тип t.
+*/
+
 #include <stdio.h>
 #define swap(t, x, y){ x = x + y; y = x - y; x = x - y; }
 int main(void){

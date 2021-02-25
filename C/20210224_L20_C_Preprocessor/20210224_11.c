@@ -23,7 +23,8 @@
              }\
              printf("The average is: %d", sum / (y - x));\
              }
-#define fPow(x, y) { pow(x, y)}
+#define fPow(x, y) (pow(x, y))
+#define power(x, y) (y << (x)) 
 #define toUpper(c) { toupper(c)}
 
 #define DISP(f,x) (printf("sqrt (%g) = %g\n", (x), (f(x))))
@@ -33,10 +34,12 @@ int main(void){
     int x = 2;
     int y = 3;
     int result = AVG1(x, y);
-    int powResult = (int)fPow(x, y);
-    char c = "a";
+    double powResult = fPow(3.0, 4.0);
+    printf("Power of y: %d\n", powResult);
+    char c = 'a';
     char toUpResult = toUpper(c);
-    DISP1(sqrt, 1024.0);
+    printf("ToUpper: %c\n", toUpResult);
+    DISP(sqrt, 1024.0);
     return 0;
 
 
