@@ -15,16 +15,9 @@
 #include <ctype.h>
 
 #define AVG1(x, y) {(x + y) / 2}
-#define AVG2(x, y) {\
-             int sum = 0; \
-             for ( ; x < y; y++)\
-             {\
-                sum += x; \
-             }\
-             printf("The average is: %d", sum / (y - x));\
-             }
-#define fPow(x, y) (pow(x, y))
-#define power(x, y) (y << (x)) 
+#define AVG2(x, y, result) for(int i = (x); i <= (y); i++) {result += 1;} result /= (y) - (x);
+#define fPow(x, y, result) result = (x); for(int i = 0; i < (y); i++) {result *=(x);}
+#define power2(x) (1 << (x)) 
 #define toUpper(c) { toupper(c)}
 
 #define DISP(f,x) (printf("sqrt (%g) = %g\n", (x), (f(x))))
@@ -33,9 +26,13 @@
 int main(void){
     int x = 2;
     int y = 3;
+    double result2;
+    int result1;
     int result = AVG1(x, y);
-    double powResult = fPow(3.0, 4.0);
-    printf("Power of y: %d\n", powResult);
+    AVG2(1, 4, result1);
+    fPow(3.0, 4.0, result2);
+    printf("Power of y: %d\n", result2);
+    printf("AVG2: %d\n", result1);
     char c = 'a';
     char toUpResult = toUpper(c);
     printf("ToUpper: %c\n", toUpResult);
