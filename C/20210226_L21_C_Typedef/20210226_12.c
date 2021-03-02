@@ -1,86 +1,115 @@
-/*
-Задача 12. Представете служителите във фирма в структура с
-членове: пореден номер, име, презиме, фамилия, позиция, трудов стаж в
-години, заплата в лева, указател към структурата, описващ неговия
-началник. Напишете програма, която въвежда 10 служителя, които се
-съхраняват в масив от описаните структури. Въвеждането на служителите
-може да стане на два паса, първо въвеждане на всички данни без
-указателя към началника и на втори пас, указване на всеки служител кой е
-неговият началник. В решението трябва да се използва динамично
-заделяне на памет и typedef.
-*/
-
+/*  Задача 12. Представете служителите във фирма в структура с членове: 
+    пореден номер, име, презиме, фамилия, позиция, трудов стаж в години, заплата в лева, 
+    указател към структурата, описващ неговия началник. Напишете програма, която въвежда 10 служителя, 
+    които се съхраняват в масив от описаните структури. Въвеждането на служителите може да стане на два паса, 
+    първо въвеждане на всички данни без указателя към началника и на втори пас, 
+    указване на всеки служител кой е неговият началник.
+    В решението трябва да се използва динамично заделяне на памет и typedef. */
 
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <time.h>
+#define SIZE 10
+#define NUMBEOFMONTHS 12
+#define SALARYNONMANAGER 2500
+#define SALARYMANAGER 3500
+#define NUMOFMANAGERS 2
 
-struct experience{
+char *firstNames[] = {
+    "Ivan", "Dragan", "Stoyan", "Pesho", "Georgi", "George"
+};
+char *surNames[] = {
+    "Ivanov", "Draganov", "Stoyanov", "Petkov", "Georgiev", "George"
+};
+char *positions[] = {
+    "Waiter", "Bartender", "Cook", "Head chef"
+};
+#define RANDOM_FIRSTNAME firstNames[rand() % (sizeof(firstNames)/sizeof(char *) - 1)]
+#define RANDOM_SURNAME surNames[rand() % (sizeof(surNames)/sizeof(char *) - 1)]
+#define RANDOM_POSITION positions[rand() % (sizeof(positions)/sizeof(char *) - 1)]
+
+typedef struct experience{
     int years;
     int months;
-};
+} exp;
 
-struct employee{
+typedef struct employee{
     int id;
     char *name;
     char *middleName;
     char *lastName;
-    char *job;
-    struct experience experience;
+    char *position;
+    exp experience;
     int pay;
     struct employee *manager;
-};
+} employee;
 
-struct experience makeExperience(int years, int months);
-struct employee makeEmployee(int id, char *name, char *middleName,
-char *lastName, char *job, struct experience experience, int pay);
-void fillEmployeeArray(struct employee arr[], int size);
-void printEmployees(struct employee arr[], int size);
+exp makeExperience(int years, int months);
+employee makeEmployee(char *name, char *middleName,
+    char *lastName, char *position, exp experience, int pay);
+void fillEmployeeArray(employee arr[], int size);
+void printEmployees(employee arr[], int size);
 
 int main(void){
     srand(time(NULL));
 
-    struct employee employees[10];
-    fillEmployeeArray(employees,10);
-    employees[0].manager = &employees[9];
-    for(int i = 1; i < 10;i++){
-        employees[i].manager = &employees[i-1];
-    }
-    printEmployees(employees,10);
+    employee employees[SIZE];
+    fillEmployeeArray(employees,SIZE);
+    printEmployees(employees,SIZE);
     return 0;
 }
 
-struct experience makeExperience(int years, int months){
-    years+=months / 12;
-    months=months % 12;
-    struct experience experience = {years,months};
+exp makeExperience(int years, int months){
+    years+=months / NUMBEOFMONTHS;
+    months=months % NUMBEOFMONTHS;
+    exp experience = {years,months};
     return experience;
 }
 
-struct employee makeEmployee(int id, char *name, char *middleName,
-char *lastName, char *job, struct experience experience, int pay){
-    struct employee employee = {id, name, middleName, lastName, job,
-    experience, pay, NULL};
+employee makeEmployee(char *name, char *middleName,
+char *lastName, char *position, exp experience, int pay){
+    static int currentID = 1;
+    employee employee = { currentID, 
+        .name = (char *) malloc(strlen(name) + 1),
+        .middleName = (char *) malloc(strlen(middleName) + 1), 
+        .lastName = (char *) malloc(strlen(lastName) + 1), 
+        .position = (char *) malloc(strlen(position) + 1),
+        experience, pay, NULL};
+    strcpy(employee.name, name);
+    strcpy(employee.middleName, middleName);
+    strcpy(employee.lastName, lastName);
+    strcpy(employee.position, position);
+    currentID++;
     return employee;
 }
 
-void fillEmployeeArray(struct employee arr[], int size){
-    for(int i = 0; i < size; i++){
-        arr[i] = makeEmployee(rand()%1000,"Todor", "Ivanov"," Todorov",
-        "Manager", makeExperience(rand()%10,(rand()%12)+1),rand()%3000+1000);
+void fillEmployeeArray(employee arr[], int size){
+    arr[0] = makeEmployee(RANDOM_FIRSTNAME, RANDOM_SURNAME, RANDOM_SURNAME, "Manager", 
+        makeExperience(rand()%SIZE + NUMOFMANAGERS, (rand()%NUMBEOFMONTHS)+1), 
+        rand()%SALARYMANAGER);
+    arr[0].manager = &arr[0];
+    arr[1] = makeEmployee(RANDOM_FIRSTNAME, RANDOM_SURNAME, RANDOM_SURNAME, "Assistant Manager", 
+        makeExperience(rand()%SIZE + 1, (rand()%NUMBEOFMONTHS)+1), 
+        rand()%SALARYMANAGER );
+    arr[1].manager = &arr[0];
+    for(int i = NUMOFMANAGERS; i < size; i++){
+        arr[i] = makeEmployee(RANDOM_FIRSTNAME, RANDOM_SURNAME, RANDOM_SURNAME, RANDOM_POSITION, 
+            makeExperience(rand()%SIZE, (rand()%NUMBEOFMONTHS)+1), 
+            rand()%SALARYNONMANAGER);
+        arr[i].manager = &arr[rand() % NUMOFMANAGERS];
     }
 }
 
 
-void printEmployees(struct employee arr[], int size){
+void printEmployees(employee arr[], int size){
     for(int i = 0; i < size; i++){
         printf("Id: %d\n",arr[i].id);
         printf("First name: %s\n",arr[i].name);
         printf("Middle name: %s\n",arr[i].middleName);
         printf("Last name: %s\n",arr[i].lastName);
-        printf("Job: %s\n",arr[i].job);
-        printf("Experience: %d yers %d months\n",arr[i].experience.years,
+        printf("Job: %s\n",arr[i].position);
+        printf("Experience: %d years %d months\n",arr[i].experience.years,
         arr[i].experience.months);
         printf("Pay: %d\n",arr[i].pay);
         printf("Manager id: %d\n",arr[i].manager->id);
