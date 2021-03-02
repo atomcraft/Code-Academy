@@ -15,6 +15,14 @@ void generate_random(int l, int r, int count) { //this will generate random numb
       printf("%d ", rand_num);
    }
 }
+
+double randfrom(double min, double max) 
+{
+    double range = (max - min); 
+    double div = RAND_MAX / range;
+    return min + (rand() / div);
+}
+
 main() {
    int lower = 10, upper = 15, count = 15;
    srand(time(0)); //current time as seed of random number generator
