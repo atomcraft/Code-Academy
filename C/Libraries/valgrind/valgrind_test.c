@@ -3,8 +3,13 @@
 
 void f(void){
     int* x = malloc(10 * sizeof(int));
-     x[10] = 0;        /* problem 1: heap block overrun */
+    x[10] = 0;
+    //  x[9] = 0;
+    //  printf("x[9] = %d\n", x[9]);
+    //  free(x);  
+          /* problem 1: heap block overrun */
 }                    /* problem 2: memory leak -- x not freed */
+
 
 // void test();
 // void test2();
@@ -15,6 +20,7 @@ void f(void){
 
 int main(void){
     f();
+    
     // test();
     // test2();
     // test3();
