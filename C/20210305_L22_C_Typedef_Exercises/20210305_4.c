@@ -16,7 +16,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int playground[7][7] = {
+#define ROW 7
+#define COL 7
+
+int playground[ROW][COL] = {
     3, 3, 2, 4, 3, 1, 2,
     2, 4, 2, 3, 2, 4, 3,
     4, 2, 3, 2, 4, 2, 1,
@@ -36,8 +39,8 @@ void playerMove(int *ptr, struct player player1, struct player player2);
 int main(void){ 
     int *ptr = (int*)playground;
 
-    for (int i = 0; i < 7; i++){
-        for (int j = 0; j < 7; j++){
+    for (int i = 0; i < ROW; i++){
+        for (int j = 0; j < COL; j++){
             printf("%c ", *(ptr + 7 * i + j) + 48);
         }
         printf("\n");
@@ -60,8 +63,8 @@ void playerMove(int *ptr, struct player player1, struct player player2){
 
     switch (direction){
         case 8:
-            if ((player1.x - *(ptr + 7 * player1.x + player1.y)) >= 0){
-                player1.x = player1.x - *(ptr + 7 * player1.x + player1.y);
+            if ((player1.x - *(ptr + ROW * player1.x + player1.y)) >= 0){
+                player1.x = player1.x - *(ptr + ROW * player1.x + player1.y);
             }
             else {
                 printf("Invalid direction\n");
@@ -69,8 +72,8 @@ void playerMove(int *ptr, struct player player1, struct player player2){
             }
             break;
         case 2:
-            if ((player1.x + *(ptr + 7 * player1.x + player1.y)) < 7){
-                player1.x = player1.x + *(ptr + 7 * player1.x + player1.y);
+            if ((player1.x + *(ptr + ROW * player1.x + player1.y)) < ROW){
+                player1.x = player1.x + *(ptr + ROW * player1.x + player1.y);
             }
             else {
                 printf("Invalid direction\n");
@@ -78,8 +81,8 @@ void playerMove(int *ptr, struct player player1, struct player player2){
             }
             break;
         case 4:
-            if ((player1.y - *(ptr + 7 * player1.x + player1.y)) >= 0){
-                player1.y = player1.y - *(ptr + 7 * player1.x + player1.y);
+            if ((player1.y - *(ptr + COL * player1.x + player1.y)) >= 0){
+                player1.y = player1.y - *(ptr + COL * player1.x + player1.y);
             }
             else {
                 printf("Invalid direction\n");
@@ -87,8 +90,8 @@ void playerMove(int *ptr, struct player player1, struct player player2){
             }
             break;
         case 6:
-            if ((player1.y + *(ptr + 7 * player1.x + player1.y)) < 7){
-                player1.y = player1.y + *(ptr + 7 * player1.x + player1.y);
+            if ((player1.y + *(ptr + COL * player1.x + player1.y)) < COL){
+                player1.y = player1.y + *(ptr + COL * player1.x + player1.y);
             }
             else {
                 printf("Invalid direction\n");
@@ -115,8 +118,8 @@ void playerMove(int *ptr, struct player player1, struct player player2){
 
     switch (direction){
         case 8:
-            if ((player2.x - *(ptr + 7 * player2.x + player2.y)) >= 0){
-                player2.x = player2.x - *(ptr + 7 * player2.x + player2.y);
+            if ((player2.x - *(ptr + ROW * player2.x + player2.y)) >= 0){
+                player2.x = player2.x - *(ptr + ROW * player2.x + player2.y);
             }
             else {
                 printf("Invalid direction\n");
@@ -124,8 +127,8 @@ void playerMove(int *ptr, struct player player1, struct player player2){
             }
             break;
         case 2:
-            if ((player2.x + *(ptr + 7 * player2.x + player2.y)) < 7){
-                player2.x = player2.x + *(ptr + 7 * player2.x + player2.y);
+            if ((player2.x + *(ptr + ROW * player2.x + player2.y)) < ROW){
+                player2.x = player2.x + *(ptr + ROW * player2.x + player2.y);
             }
             else {
                 printf("Invalid direction\n");
@@ -133,8 +136,8 @@ void playerMove(int *ptr, struct player player1, struct player player2){
             }
             break;
         case 4:
-            if ((player2.y - *(ptr + 7 * player2.x + player2.y)) >= 0){
-                player2.y = player2.y - *(ptr + 7 * player2.x + player2.y);
+            if ((player2.y - *(ptr + COL * player2.x + player2.y)) >= 0){
+                player2.y = player2.y - *(ptr + COL * player2.x + player2.y);
             }
             else {
                 printf("Invalid direction\n");
@@ -142,8 +145,8 @@ void playerMove(int *ptr, struct player player1, struct player player2){
             }
             break;
         case 6:
-            if ((player2.y + *(ptr + 7 * player2.x + player2.y)) < 7){
-                player2.y = player2.y + *(ptr + 7 * player2.x + player2.y);
+            if ((player2.y + *(ptr + COL * player2.x + player2.y)) < COL){
+                player2.y = player2.y + *(ptr + COL * player2.x + player2.y);
             }
             else {
                 printf("Invalid direction\n");
