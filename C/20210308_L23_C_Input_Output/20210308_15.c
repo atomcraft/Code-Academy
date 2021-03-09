@@ -15,8 +15,8 @@ int main(void){
     int i = 0, j, COUNT = 0;
     fp = fopen("test5.txt", "r");
     if(NULL == fp){
-        printf("Failed to open fail.\n");
-        return 1;
+        printf("Failed to open file.\n");
+        return -1;
     }
     printf("\nThe original content is:\n\n");
     ch = getc(fp);

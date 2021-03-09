@@ -18,7 +18,7 @@ int main(int argc, char *argv[]){
         while (--argc > 0){
             if ((fp = fopen(*++argv, "r")) == NULL){
                 printf("cat: failed to open %s\n", *argv);
-                return 1;
+                return -1;
             } else{
                 fileCopy(fp, stdout);
                 fclose(fp);

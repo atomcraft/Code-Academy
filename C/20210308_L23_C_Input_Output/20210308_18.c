@@ -38,8 +38,8 @@ void xmlParser(t_person person1, t_person person2){
     FILE *fp;
     fp = fopen("people.xml", "w+" );
     if(NULL == fp){
-        printf("Failed to open fail.\n");
-        exit(1);
+        printf("Failed to open file.\n");
+        exit(-1);
     }
     fprintf(fp, FORMAT_PERSON_OUT, person1.name, person1.age, person1.gender);
     fseek(fp, 0, SEEK_SET);

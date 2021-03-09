@@ -21,12 +21,12 @@ int main(void){
     ifp = fopen (filename, "wt");
     if(NULL == ifp){
         printf("Failed to open %s.\n",filename);
-        return 1;
+        return -1;
     }
     ofp = fopen (tempFileName, "wt");
     if(NULL == ofp){
         printf("Failed to open %s.\n",tempFileName);
-        return 1;
+        return -1;
     }
     fileCopy(ifp, ofp);
 

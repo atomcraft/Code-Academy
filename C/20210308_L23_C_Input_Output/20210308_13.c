@@ -19,7 +19,7 @@ int main()
     fp = fopen("test3.txt", "r");
     if (NULL == fp){
         printf("Could not open file.\n");
-        return 1;
+        return -1;
     }
     for (c = getc(fp); c != EOF; c = getc(fp))
         if (c == '\n'){

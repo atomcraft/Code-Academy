@@ -18,18 +18,18 @@ int main(void){
     char str[MAX], temp[] = "temp.txt";		
     ifp = fopen(fname, "r");
     if(NULL == ifp){
-        printf("Failed to open fail.\n");
-        return 1;
+        printf("Failed to open file.\n");
+        return -1;
     }
     ofp = fopen(temp, "wt");  
     if(NULL == ifp){
-        printf("Failed to open fail.\n");
-        return 1;
+        printf("Failed to open file.\n");
+        return -1;
     }
     printf(" Input the line you want to remove : ");
     scanf("%d", &lno);
 	lno++;
-    // copy all contents to the temporary file except the specific line
+    /* copy all contents to the temporary file except the specific line */
     while (!feof(ifp)){
         strcpy(str, "\0");
         fgets(str, MAX, ifp);
