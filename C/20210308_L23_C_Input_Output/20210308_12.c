@@ -15,3 +15,33 @@ ftell()
 За текстови файлови третият аргумент трябва да е SEEK_SET, за бинарни
 файлове и просто число в байтове.
 */
+
+#include <stdio.h>
+
+int main (void){
+    FILE *fp;
+    fp = fopen("file1.txt","w+");
+    if(NULL == fp){
+      perror("Error opening file");
+      return -1;
+    }
+    fputs("This is a test", fp);
+    fseek( fp, 7, SEEK_SET );
+    fputs(" Fseek Testing", fp);
+    fclose(fp);
+    fp = fopen("file1.txt","r");
+    if(NULL == fp){
+      perror("Error opening file");
+      return -1;
+    }
+    int c;
+    while(1){
+        c = fgetc(fp);
+        if(feof(fp)){
+            break;
+        }
+        printf("%c", c);
+    }
+    fclose(fp);
+    return 0;
+}
