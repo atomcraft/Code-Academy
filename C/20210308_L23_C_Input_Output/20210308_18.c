@@ -12,7 +12,7 @@ char gender;
 #include <stdio.h>
 #include <stdlib.h>
 
-static const char *FORMAT_PERSON_IN = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<person>\n<name>%s</name>\n<age>%d</age>\n<gender>%c</gender>\n</person>\n";
+static const char *FORMAT_PERSON_IN = "<person>\n<name>%[^<]</name>\n<age>%d</age>\n<gender>%c</gender>\n</person>\n";
 static const char *FORMAT_PERSON_OUT = "<person>\n<name>%s</name>\n<age>%d</age>\n<gender>%c</gender>\n</person>\n";
 typedef struct Person{
     char name[20];

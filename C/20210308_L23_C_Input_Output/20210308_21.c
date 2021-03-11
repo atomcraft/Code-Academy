@@ -67,16 +67,16 @@ int main(int argc, char* argv[]){
         if (LineLength == 0) break;
         UpdateCounts();
     }
-    if (argc < 2){
-        printf("The number of words is: %d\n", NWords);
-    } else if (*(argv + 1) == "-c"){
-        printf("The number of symbols is: %d\n", NChars);
-    } else if (*(argv + 1) == "-l"){
-        printf("The number of lines is: %d\n", NLines);
-    } else if (*(argv + 1) == "-c" && *(argv + 2) == "-w"){
-        printf("The number of symbols is: %d, and words is: %d\n", NChars, NWords);
-    } 
+    // if (argc < 2){
+    //     printf("The number of words is: %d\n", NWords);
+    // } else if (*(argv + 1) == "-c"){
+    //     printf("The number of symbols is: %d\n", NChars);
+    // } else if (*(argv + 1) == "-l"){
+    //     printf("The number of lines is: %d\n", NLines);
+    // } else if (*(argv + 1) == "-c" && *(argv + 2) == "-w"){
+    //     printf("The number of symbols is: %d, and words is: %d\n", NChars, NWords);
+    // } 
     
-    /*printf("%d %d %d\n",NChars,NWords,NLines);*/
+    printf("%d %d %d\n",NChars,NWords,NLines);
     return 0;
 }
