@@ -12,6 +12,50 @@
 #define MAXLINE 100
 #define MAXPAGE 66
 
+void filePrint(FILE *fp, char *fname);
+int heading(char *fname, int pageNum);
+
 int main(int argc, char *argv[]){
-    
+    FILE *fp;
+    if (argc == 1){
+        filePrint(stdin, " ");
+    } else{
+        while (--argc > 0){
+            if ((fp = fopen(*++argv, "r") == NULL)){
+                fprintf(stderr, "print: can't open %s\n", *argv);
+                exit(1);
+            } else{
+                filePrint(fp, *argv);
+                fclose(fp);
+            }            
+        }
+    }
+    return 0;  
+}
+
+void filePrint(FILE *fp, char *fname){
+    int lineNum, pageNum = 1;
+    char line[MAXLINE];
+    lineNum = heading(fname, pageNum++);
+    while (fgets(line, MAXLINE, fp) != NULL){
+        if (lineNum == 1){
+            fprintf(stdout, "\f");
+            lineNum = heading(fname, pageNum++);
+        }
+        fputs(line, stdout);
+        if (++lineNum > MAXPAGE - MAXBOT){
+            lineNum = 1;
+        }
+        fprintf(stdout, "\f");
+    }
+}
+
+int heading(char *fname, int pageNum){
+    int ln = 3;
+    fprintf(stdout, "\n\n");
+    fprintf(stdout, "%s page %d\n", fname, pageNum);
+    while (ln++ < MAXHDR){
+        fprintf(stdout, "\n");
+        return ln;
+    }
 }
