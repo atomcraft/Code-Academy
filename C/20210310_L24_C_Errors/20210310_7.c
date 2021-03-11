@@ -11,6 +11,8 @@ Ctrl+D, Ctrl+Z
 void sleep(int);
 
 void ctrlc_handler(int iUnused){
+    printf("\nCtrl + D\n");
+    printf("\nCtrl + Z\n");
     printf("\nCtrl + C\n");
     exit(EXIT_FAILURE);
 }
