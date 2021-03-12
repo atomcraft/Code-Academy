@@ -4,7 +4,7 @@
 Хвърлете грешка при липса на затварящи скоби и реда на който са
 */
 #include <stdio.h>
-#include <stdlib.h>
+#include <string.h>
 
 char st[20];
 int top = -1;
