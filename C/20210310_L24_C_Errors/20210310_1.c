@@ -18,10 +18,12 @@ int main(int argc, char argv[]){
         fprintf(stderr, "comp: need two file names\n");
         exit(1);
     } else{
-        if ((fp1 = fopen(*++argv, "r") == NULL)){
+        fp1 = fopen(++argv, "r");
+        fp2 = fopen(++argv, "r");
+        if ((fp1 == NULL)){
             fprintf(stderr, "comp: can't open %s\n", *argv);
             exit(1);
-        } else if ((fp2 = fopen(*++argv, "r") == NULL)){
+        } else if ((fp2 == NULL)){
             fprintf(stderr, "comp: can't open %s\n", *argv);
             exit(1);
         } else{
@@ -40,7 +42,7 @@ void fileComp(FILE *fp1, FILE *fp2){
         lp1 = fgets(line1, MAXLINE, fp1);
         lp2 = fgets(line2, MAXLINE, fp2);
         if (lp1 == line1 && lp2 == line2){
-            if (strcomp(line1, line2) != 0){
+            if (strcmp(line1, line2) != 0){
                 printf("first difference in line\n%s\n", line1);
                 lp1 = lp2 = NULL;
             }

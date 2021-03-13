@@ -21,7 +21,8 @@ int main(int argc, char *argv[]){
         filePrint(stdin, " ");
     } else{
         while (--argc > 0){
-            if ((fp = fopen(*++argv, "r") == NULL)){
+            fp = fopen(*++argv, "r");
+            if ((fp == NULL)){
                 fprintf(stderr, "print: can't open %s\n", *argv);
                 exit(1);
             } else{

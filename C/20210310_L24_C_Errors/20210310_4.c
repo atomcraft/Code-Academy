@@ -185,6 +185,11 @@ void getShipmentInfo(double *priceShipment, double *priceTotalShipment){
         }
     }
     findBestShipmentOption(priceShipment, priceTotalShipment, numShipment);
+    fp = fopen("funct_errors.txt", "wt");
+    if (NULL == fp){
+        perror("Failed to open file\n");
+        exit(1);
+    }
     fprintf(fp,"\ngetShipmentInfo_Func: success\n");
     fclose(fp);
 }
@@ -211,5 +216,6 @@ void findBestShipmentOption(double *priceShipment, double *priceTotalShipment, i
         printf("It is better to send your shipments separately. In this case they will cost %.2f leva instead of %.2f leva.\n", *priceShipment, *priceTotalShipment);
         fprintf(fp,"\nfindBestShipmentOption_Func: success\n");
         fclose(fp);
+       
     }
 }
