@@ -30,7 +30,7 @@ int main(void){
 
 void getShipmentInfo(double *priceShipment, double *priceTotalShipment){
     FILE *fp;
-    fp = fopen("funct_errors.txt", "wt");
+    fp = fopen("funct_errors.txt", "a+");
     if (NULL == fp){
         perror("Failed to open file\n");
         exit(1);
@@ -185,7 +185,7 @@ void getShipmentInfo(double *priceShipment, double *priceTotalShipment){
         }
     }
     findBestShipmentOption(priceShipment, priceTotalShipment, numShipment);
-    fp = fopen("funct_errors.txt", "wt");
+    fp = fopen("funct_errors.txt", "a+");
     if (NULL == fp){
         perror("Failed to open file\n");
         exit(1);
@@ -196,7 +196,7 @@ void getShipmentInfo(double *priceShipment, double *priceTotalShipment){
 
 void findBestShipmentOption(double *priceShipment, double *priceTotalShipment, int numShipment){
     FILE *fp;
-    fp = fopen("funct_errors.txt", "wt");
+    fp = fopen("funct_errors.txt", "a+");
     if (NULL == fp){
         perror("\nFailed to open file\n");
         exit(1);

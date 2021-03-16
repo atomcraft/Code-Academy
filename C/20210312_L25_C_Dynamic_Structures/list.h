@@ -1,3 +1,5 @@
+#include <stdio.h>
+#include <stdlib.h>
 
 typedef struct t_node t_node;
 

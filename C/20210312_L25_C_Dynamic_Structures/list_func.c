@@ -1,5 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "list.h"
 
 void init(){
@@ -119,15 +117,22 @@ void printCurr(t_node *curr){
 
 void printListNthElemFromEnd(int elemNum){
     t_node *p = start;
-    int counter = 0;
+    int counter = 1;
     t_node *temp = NULL;
-    while(p != NULL){
-        if (counter == elemNum){
-            temp = p->m_pNext;
-        }
-        counter++;
-        // printf("%d, ", p->m_nValue);
+    temp = (t_node *)malloc(sizeof(t_node));
+    while(p->m_pNext != NULL){
         p = p->m_pNext;
+        counter++;
+        if (counter == elemNum){
+            // temp = p->m_pNext;
+            temp = start;
+        } else if (counter > 5){
+            temp = temp->m_pNext;
+        }
+        free(temp);
+        temp = NULL;
+        // printf("%d, ", p->m_nValue);
+        
     }
     printf("%d, ", temp->m_nValue);
 }
