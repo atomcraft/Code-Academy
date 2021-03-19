@@ -110,12 +110,17 @@ void printRight(treeNode_t *t){
 }
 
 void insertKey(int key, treeNode_t **t){
-    if( *t == 0 ){
+    if( *t ==NULL ){
         *t = (treeNode_t *) malloc( sizeof(treeNode_t));
-        (*t)->data = key;
-        /* initialize the children to null */
-        (*t)->left = 0;    
-        (*t)->right = 0;  
+        if ( *t != NULL ){
+            (*t)->data = key;
+            /* initialize the children to null */
+            (*t)->left = NULL;
+            (*t)->right = NULL; 
+        } else{
+            printf("Error allocating memory.\n");
+            exit(-1);
+        }              
     } else if(key < (*t)->data){
         insertKey( key, &(*t)->left );
     } else if(key > (*t)->data){

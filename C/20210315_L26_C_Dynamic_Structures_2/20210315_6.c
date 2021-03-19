@@ -16,8 +16,32 @@ struct BSTNode{
 };
 
 BSTNode *BSTMerge(BSTNode *tree1, BSTNode *tree2){
-    // This doesn't seem to really work
-    return tree1;
+    stack1 = Stack();
+    stack2 = Stack();
+    tree1 = root1;
+    tree2 = root2;
+    BSTNode[] result;
+    while(tree1 || tree2 || stack1 || stack2) {
+        while (tree1) {
+            stack1.push(tree1);
+            tree1 = tree1.left;
+        }
+        while (tree2) {
+            stack2.push(tree2);
+            tree2 = tree2.left;
+        }
+        if ((!stack2) || (stack1 && stack1.top().val <= stack2.top().val)) {
+            tree1 = stack1.pop();
+            result.push_back(tree1.val);
+            tree1 = tree1.right;
+        }
+        else {
+            tree2 = stack2.pop();
+            result.push_back(tree2.val);
+            tree2 = tree2.right;
+        }
+    }
+    return result;
 }
 
 void BSTInsert(BSTNode *&root, int data){

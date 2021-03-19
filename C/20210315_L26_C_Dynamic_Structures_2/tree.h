@@ -9,7 +9,7 @@ typedef struct treeNode_t{
     int data;
     treeNode_t *left;
     treeNode_t *right;
-    }treeNode_t;
+}treeNode_t;
 
 extern treeNode_t *root;
 
