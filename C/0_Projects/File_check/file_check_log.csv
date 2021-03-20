@@ -1,12 +1,16 @@
-Name, Extension, Size, MD5_Checksum
-file_check, out, 26448, ,
-file_check_log, csv, 86, ,
-file_check_main, c, 4926, ,
-md5_checksum, c, 1175, , 
-md5_checksum, out, 28600, ,
-test, txt, 0, ,
-gcc, pdf, 2949188, ,
-Richard Reese - Understanding and Using C Pointers-O'Reilly Media (2013), pdf, 7700942, ,
-shellcoders_handbook_discovering_and_exploiting_security_holes, pdf, 3643500, , 
-test_folder, , 4096, ,
-., , 4096, ,
+Name, Extension, Size, NLink, Mode, Ino
+diff, out,    25416,   1, 100777, 15920
+file_check, out,    26440,   1, 100777, 15922
+file_check_log, csv,      126,   1, 100777, 15882
+file_check_main, c,     5393,   1, 100777, 15868
+md5_checksum, c,     1175,   1, 100777, 15870
+md5_checksum, out,    28600,   1, 100777, 15880
+my_diff, c,     2325,   1, 100777, 15912
+my_diff, out,    25528,   1, 100777, 15921
+test, txt,      725,   1, 100777, 15876
+test2, txt,       85,   1, 100777, 15913
+gcc, pdf,  2949188,   1, 100777, 15874
+Richard Reese - Understanding and Using C Pointers-O'Reilly Media (2013), pdf,  7700942,   1, 100777, 15875
+shellcoders_handbook_discovering_and_exploiting_security_holes, pdf,  3643500,   1, 100777, 15869
+test_folder, ,     4096,   1,  40777, 15873
+., ,     4096,   1,  40777, 15862

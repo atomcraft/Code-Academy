@@ -30,7 +30,13 @@
 #include <dirent.h>
 #include <libgen.h>
 
-#define MAX_PATH 1024
+#ifdef HAVE_ST_BIRTHTIME
+#define birthtime(x) x.st_birthtime
+#else
+#define birthtime(x) x.st_ctime
+#endif
+
+#define MAX_PATH 4096
 
 static const char *FORMAT_CVS_HEADER = "Name, Extension, Size, NLink, Mode, Ino\n";
 static const char *FORMAT_CVS_BODY = "%s, %s, %8ld, %3u, %6o, %5u\n";
@@ -66,7 +72,7 @@ void fsize(char *name){
     printf("%5u %6o %3u %8ld %s\n", stbuf.st_ino, 
              stbuf.st_mode, stbuf.st_nlink, stbuf.st_size, name);
     printf("Last modified: %ld\n", stbuf.st_mtime);
-    printf("File burthtime: %ld\n", stbuf)
+    printf("File birthtime: %ld\n", birthtime(stbuf));
 }
 
 int main(int argc, char **argv){
@@ -136,6 +142,13 @@ char *getFileExt(const char *filename){
     char *dot = strrchr(filename, '.');
     if(!dot || dot == filename) return "";
     return dot + 1;
+    /*
+    if( access( fname, F_OK ) == 0 ) {
+    // file exists
+} else {
+    // file doesn't exist
+}
+*/
 }
 
 void stripExt(char *fname){
@@ -149,3 +162,24 @@ void stripExt(char *fname){
         *end = '\0';
     }
 }
+/*
+int file_is_modified(const char *path, time_t oldMTime) {
+    struct stat file_stat;
+    int err = stat(path, &file_stat);
+    if (err != 0) {
+        perror(" [file_is_modified] stat");
+        exit(errno);
+    }
+    return file_stat.st_mtime > oldMTime;
+}
+
+string getFileExt(const string& s) {
+
+   size_t i = s.rfind('.', s.length());
+   if (i != string::npos) {
+      return(s.substr(i+1, s.length() - i));
+   }
+
+   return("");
+}
+*/
