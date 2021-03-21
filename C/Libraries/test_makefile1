@@ -1,0 +1,47 @@
+# CC := gcc
+# LIBS := -lssl -lcrypto
+# CFLAGS := -g -Wall 
+# COMPILE := $(CC) $(CFLAGS) $(LIBS)
+# SRCDIR := ./src
+# BUILD_DIR := ./build
+# SRCS := $(shell find ./src -name *.c)
+# CFILE1 := $(SRCDIR/event_watch_file_state_comp.c) 
+# CFILE2 := $(SRCDIR/files_check_func.c)
+# CFILE3 := $(SRCDIR/md5_checksum.c)
+# CFILE4 := $(SRCDIR/files_check_main.c)
+# OBJ := $(./src/%.o)
+# OFILE1 := $(SRCDIR/event_watch_file_state_comp.o) 
+# OFILE2 := $(SRCDIR/files_check_func.o)
+# OFILE3 := $(SRCDIR/md5_checksum.o)
+# OFILE4 := $(SRCDIR/files_check_main.o)  
+# TARGET=files_check.out
+# PROG=files_check.out
+# $(PROG):$(OBJ)
+# 	$(COMPILE) $(OBJ) -o $(PROG)
+# $(OBJ):$(SRCS)
+# 	$(COMPILE) $(OBJ) -c $(SRCS) 
+
+CC := gcc
+# CFLAGS := -lssl -lcrypto
+LIBFLAGS := -lcrypto -lssl
+LDLIBS := -lcrypto -lssl
+TARGET ?= files_check.out
+SRC_DIRS ?= ./src
+
+SRCS := $(shell find $(SRC_DIRS) -name *.cpp -or -name *.c -or -name *.s)
+OBJS := $(addsuffix .o,$(basename $(SRCS)))
+DEPS := $(OBJS:.o=.d)
+
+INC_DIRS := $(shell find $(SRC_DIRS) -type d)
+INC_FLAGS := $(addprefix -I,$(INC_DIRS))
+
+CPPFLAGS ?= $(INC_FLAGS) -MMD -MP
+
+$(TARGET): $(OBJS)
+	$(CC) $(LDFLAGS) $(OBJS) -o $@ $(LOADLIBES) $(LDLIBS)
+
+.PHONY: clean
+clean:
+	$(RM) $(TARGET) $(OBJS) $(DEPS)
+
+-include $(DEPS)
