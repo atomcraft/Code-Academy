@@ -31,56 +31,32 @@ int main(int argc, char **argv){
     }
     /* iterate over all arguments */
     for (int i = 1; i < (argc - 1); i++){
-        if ((0 == strcmp(argv[1], "-c")) && (argv[2] == NULL)){
-            fsize(".");
-            continue;
-        } else if ((0 == strcmp(argv[1], "-c")) && (argv[2] != NULL)){
-            /* use provided directory */
+        if ((0 == strcmp(argv[1], "-c"))){
             fsize(argv[++i]);
             continue;
-        } else if ((0 == strcmp(argv[1], "-fc")) && (argv[2] != NULL)){
+        } else if ((0 == strcmp(argv[1], "-fc"))){
             if(access(CSV_FILE_NAME, F_OK) == 0){
                 while (--argc > 1){
                     csvFileModificationCheck(argv[++i]);
                     continue;
                 }
             } else{
-                fsize(argv[++i]);
-                continue;
+                while (--argc > 1){
+                    fsize(argv[++i]);
+                    continue;
+                }
             }
-        } else if ((0 == strcmp(argv[1], "-i")) && (argv[2] != NULL)){
+        } else if ((0 == strcmp(argv[1], "-e"))){
             iNotifyEventWatch(argv[++i]);
             continue;
-        } else if ((0 == strcmp(argv[1], "-f")) && (argv[2] != NULL)){
+        } else if ((0 == strcmp(argv[1], "-f"))){
             while (--argc > 1){
                 fileInfo(argv[++i]);
-                continue;
-            }
-            
+                continue;   
+            }            
         } else{
             return help();
         }      
     }
     return 0;
-    // if (argc < MIN_REQUIRED_COMMAND_LINE_ARGS){
-    //     return help();
-    // }
-    // for (int i = 1; i < (argc); i++){
-    //     if (0 == strcmp(argv[2], "-c")){
-    //         /* if "-f" call fsize */
-    //         if (argc == 2){
-    //             fsize(".");
-    //         } else{
-    //             fsize(*++argv);
-    //         }
-    //     }
-    // }
-    // if (argc == 1){ /* by default, work with the current directory */
-    //     fsize(".");
-    // } else{
-    //     while (--argc > 0){
-    //         fsize(*++argv);
-    //     }
-    // }
-    // return 0;    
 }

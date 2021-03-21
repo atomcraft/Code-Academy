@@ -1,6 +1,7 @@
 CC := gcc
-LIBFLAGS := -lcrypto -lssl
-LDLIBS := -lcrypto -lssl
+LIBFLAGS := 
+CFLAGS := -g
+LDLIBS :=  
 TARGET ?= files_check.out
 BUILD_DIR ?= ./build
 SRC_DIRS ?= ./src
