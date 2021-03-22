@@ -1,6 +1,20 @@
 #include "files_check.h"
 
-/* fsize: print inode #, mode, links, size of file "name" */
+/* Lists program usage */
+int help(){
+    printf("Usage: \n");
+    printf("\tfiles_check.out [-c ] <path/directory> or <file>\n");
+    printf("\t-c: creates CSV file list with file name, extension, size, MD5 checksum. iNode\n\n");
+    printf("\tfiles_check.out [-fc ] <file>\n");
+    printf("\t-fc: checks if the file/s is included in the CSV file, if not it adds it. It shows last modification time, last access time, full path, name, extension, size\n\n");
+    printf("\tfiles_check.out [-e ] optional: <path/directory> or <file>\n");
+    printf("\t-e: enters events watch mode, show modifications, access as it happens. Press Ctrl+C to terminate\n\n");
+    printf("\tfiles_check.out [-f ] <file1> <file2>\n");
+    printf("\t-f: shows/compares 2 files, their last modification/creation/access time, full path, name, extension, size\n\n");
+    return 1;
+}
+
+/* fsize: print inode #, (mode, links,) size of file "name" */
 void fsize(char *name){
     struct stat stbuf;
     struct stat *pStbuf = NULL;
@@ -31,20 +45,6 @@ void fsize(char *name){
     }
 
     printf("%lu\t%ld\t%s\n", stbuf.st_ino, stbuf.st_size, name);
-}
-
-/* Lists program usage */
-int help(){
-    printf("Usage: \n");
-    printf("\tfiles_check.out [-c ] <path/directory> or <file>\n");
-    printf("\t-c: creates CSV file list with file name, extension, size, MD5 checksum. iNode\n\n");
-    printf("\tfiles_check.out [-fc ] <file>\n");
-    printf("\t-fc: checks if the file/s is included in the CSV file, if not it adds it. It shows last modification time, last access time, full path, name, extension, size\n\n");
-    printf("\tfiles_check.out [-e ] optional: <path/directory> or <file>\n");
-    printf("\t-e: enters events watch mode, show modifications, access as it happens. Press Ctrl+C to terminate\n\n");
-    printf("\tfiles_check.out [-f ] <file1> <file2>\n");
-    printf("\t-f: shows/compares 2 files, their last modification/creation/access time, full path, name, extension, size\n\n");
-    return 1;
 }
 
 /* walks the directory and sub-directories */
@@ -152,7 +152,6 @@ void csvFileModificationCheck(char *name){
             printf("File name: %s\n", bname);
             printf("File extension: %s\n", fileNameExt);
             printf("File size: %ld bytes\n", stbuf.st_size);
-            printf("Checksum: %02x\n", chkSum);
             printf("\n");
             free(path2);
         } 
