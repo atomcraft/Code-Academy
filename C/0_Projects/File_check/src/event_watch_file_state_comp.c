@@ -28,6 +28,7 @@ void fileInfo(char *name){
     strftime(buff, sizeof(buff), "%b %d %H:%M", timeinfo);
     printf("File last accessed on: %s\n", buff);
     printf("\n");
+    free(ptr);
 }
 
 
@@ -41,7 +42,7 @@ void iNotifyEventWatch(char *path){
     /* Create inotify instance */
     inotifyFd = inotify_init();   
     if (inotifyFd == -1){
-        perror("inotify_init");
+        fprintf(stderr, "inotify_init: failed!");
         exit(-1);
     }
 
@@ -49,7 +50,7 @@ void iNotifyEventWatch(char *path){
 
     wd = inotify_add_watch(inotifyFd, path, IN_ALL_EVENTS);
         if (wd == -1){
-            perror("inotify_add_watch");
+            fprintf(stderr, "inotify_add_watch: failed!");
             exit(-1);
         }
 
@@ -58,12 +59,12 @@ void iNotifyEventWatch(char *path){
     for (;;) { 
         numRead = read(inotifyFd, buf, BUF_LEN);
         if (numRead == 0){
-            perror("read() from inotify fd returned 0!");
+            fprintf(stderr, "read: from inotify fd returned 0!");
             exit(-1);
         }
 
         if (numRead == -1){
-            perror("read");
+            fprintf(stderr, "read: failed!");
             exit(-1);
         }
 

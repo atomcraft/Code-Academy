@@ -9,11 +9,11 @@ unsigned int checksum (char *name){
         exit(-1);
     }
     len = fread(buffer, sizeof(char), sizeof(buffer), fp);
-    unsigned char *buf = (unsigned char *)buffer;
     unsigned int seed = 0;
 
     for (int i = 0; i < len; ++i){
-        seed += (unsigned int)(*buf++);
+        seed += (unsigned int) buffer[i];
+        
     }
     fclose(fp);
     return seed;   

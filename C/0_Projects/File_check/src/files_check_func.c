@@ -18,13 +18,7 @@ int help(){
 void fsize(char *name){
     struct stat stbuf;
     struct stat *pStbuf = NULL;
-    int space;
-    static int flag = 0;
-    pStbuf = (struct stat *)malloc(sizeof(*pStbuf));
-    if (NULL == pStbuf){
-        fprintf(stderr, "malloc: can't allocate memory for *pStbuf\n");
-        return;
-    }   
+    static int flag = 0;  
 
     if (stat(name, &stbuf) == -1){
         fprintf(stderr, "fsize: can't access %s\n", name);
@@ -33,9 +27,8 @@ void fsize(char *name){
     if ((stbuf.st_mode & __S_IFMT) == __S_IFDIR){
         dirwalk(name, fsize);
     }
-    
-    pStbuf = &stbuf;
-    csvParser(pStbuf, name);
+
+    csvParser(stbuf, name);
     if (flag == 0){
         printf("iNode");
         printf("\tSize");
@@ -73,8 +66,8 @@ void dirwalk(char *dir, void (*fcn)(char *)){
     closedir(dfd);  
 }
 
-/* creates the CSV file list */
-void csvParser(struct stat *pStbuf, char *name){
+/* creates the CSV file list struct stat *pStbuf*/
+void csvParser(struct stat stbuf, char *name){
     unsigned int chkSum = checksum(name);
     FILE *fp;
     static int counter = 0;
@@ -94,7 +87,7 @@ void csvParser(struct stat *pStbuf, char *name){
     char *fileNameExt = getFileExt(bname);
     stripExt(bname);
     fseek(fp, 0, SEEK_SET);
-    fprintf(fp, FORMAT_CVS_BODY, bname, fileNameExt, pStbuf->st_size, chkSum, pStbuf->st_ino);
+    fprintf(fp, FORMAT_CVS_BODY, bname, fileNameExt, stbuf.st_size, chkSum, stbuf.st_ino);
     free(path2);
     fclose(fp);
 }
@@ -154,6 +147,7 @@ void csvFileModificationCheck(char *name){
             printf("File size: %ld bytes\n", stbuf.st_size);
             printf("\n");
             free(path2);
+            free(ptr);
         } 
     }
     if (flag == 0){
@@ -185,7 +179,8 @@ void csvFileModificationCheck(char *name){
         printf("File extension: %s\n", fileNameExt);
         printf("File size: %ld bytes\n", stbuf.st_size);
         printf("Checksum: %02x\n", chkSum);
-        free(path2);       
+        free(path2);
+        free(ptr);       
     }
     free(csvStbuf);
     fclose(fp);    

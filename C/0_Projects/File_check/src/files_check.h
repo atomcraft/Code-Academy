@@ -31,7 +31,7 @@
 //    unsigned char md5ChecksumArr[MD5_DIGEST_LENGTH] = {0};
 
    /* creates the CSV file list */
-   void csvParser(struct stat *pStbuf, char *name);
+   void csvParser(struct stat stbuf, char *name);
    /* checks if file is already in the CSV list, if not adds it, if yes shows info */
    void csvFileModificationCheck(char *name);
    /* returns the file extension */
