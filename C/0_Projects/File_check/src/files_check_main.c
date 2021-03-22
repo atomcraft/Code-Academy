@@ -1,12 +1,12 @@
 /*
 (11) Задача за проверка на файлове
 
-1. Напишете програма, която по зададен път да проверява всички файлове във всички поддиректории под зададената. - DONE 
-2. За всеки файл се записва: - STATUS: Printing info to CSV file DONE. Check CSV file format!
+1. Напишете програма, която по зададен път да проверява всички файлове във всички поддиректории под зададената.  
+2. За всеки файл се записва:
 2.1 име, 
 2.2 разширение, 
 2.3 големина в байтове и 
-2.4 контролна сума на съдържанието му. - MD5 Checksum - to integrate 
+2.4 контролна сума на съдържанието му.  
 3. Цялата информация се записва в CSV файл. 
 4. Допълнително програмата трябва да може:
 4.1 да сравнява два файла с информация за файловете 
@@ -23,7 +23,7 @@
 
 #include "files_check.h"
 
-/* gcc src/files_check_func.c src/event_watch_file_state_comp.c src/files_check_main.c src/md5_checksum.c -o files_check.out -lssl -lcrypto */
+/* gcc src/files_check_func.c src/event_watch_file_state_comp.c src/files_check_main.c src/checksum.c -o files_check.out */
 
 int main(int argc, char **argv){
     if (argc < MIN_REQUIRED_COMMAND_LINE_ARGS){

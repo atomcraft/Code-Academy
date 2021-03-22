@@ -31,7 +31,6 @@ void fsize(char *name){
     }
 
     printf("%lu\t%ld\t%s\n", stbuf.st_ino, stbuf.st_size, name);
-    free(pStbuf);
 }
 
 /* Lists program usage */
