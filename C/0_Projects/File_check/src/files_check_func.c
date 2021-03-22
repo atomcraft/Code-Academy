@@ -17,8 +17,7 @@ int help(){
 /* fsize: print inode #, (mode, links,) size of file "name" */
 void fsize(char *name){
     struct stat stbuf;
-    struct stat *pStbuf = NULL;
-    static int flag = 0;  
+    static int flag = 0;
 
     if (stat(name, &stbuf) == -1){
         fprintf(stderr, "fsize: can't access %s\n", name);
@@ -28,7 +27,8 @@ void fsize(char *name){
         dirwalk(name, fsize);
     }
 
-    csvParser(stbuf, name);
+    fileCheckInfoCsvParse(name, "c");
+
     if (flag == 0){
         printf("iNode");
         printf("\tSize");
@@ -66,124 +66,116 @@ void dirwalk(char *dir, void (*fcn)(char *)){
     closedir(dfd);  
 }
 
-/* creates the CSV file list struct stat *pStbuf*/
-void csvParser(struct stat stbuf, char *name){
-    unsigned int chkSum = checksum(name);
-    FILE *fp;
-    static int counter = 0;
-    char filename[NAME_MAX] = CSV_FILE_NAME;
-    fp = fopen(filename, "a");
-    if(NULL == fp){
-        fprintf(stderr, "Failed to open file %s.\n");
-        return;
-    }
-    if (counter == 0){
-        fprintf(fp, FORMAT_CVS_HEADER);
-        counter++;
-    }
-    char *bname;
-    char *path2 = strdup(name);
-    bname = basename(path2);
-    char *fileNameExt = getFileExt(bname);
-    stripExt(bname);
-    fseek(fp, 0, SEEK_SET);
-    fprintf(fp, FORMAT_CVS_BODY, bname, fileNameExt, stbuf.st_size, chkSum, stbuf.st_ino);
-    free(path2);
-    fclose(fp);
-}
-
-/* checks if file is already in the CSV list, if not adds it, if yes shows info */
-void csvFileModificationCheck(char *name){
-    unsigned int chkSum = 0;
+/* creates/modifies the CSV file list, compares and prints file info */
+void fileCheckInfoCsvParse(char *name, char *argv){
+    int initFlag = 0; /* 0 for "-c"; 1 for "-f", 2 for "-fc"; */
+    int fileEnteredInCSV = 0;
     char buff[CHAR_BUF];
     struct tm * timeinfo;
     struct stat stbuf;
+    static int flag = 0;
+    unsigned int chkSum = 0;
+    /* checks if file/directory exists */
+    if(access(name, F_OK) != 0){
+        fprintf(stderr, "file/directory: %s doesn't exist\n", name);
+        return;
+    }
 
     if (stat(name, &stbuf) == -1){
         fprintf(stderr, "fsize: can't access %s\n", name);
         return;
     }
-    if ((stbuf.st_mode & __S_IFMT) == __S_IFDIR){
-        dirwalk(name, fsize);
+
+
+    if ((0 == strcmp(argv, "-f"))){
+        initFlag = 1;
     }
+
+    if ((0 == strcmp(argv, "-fc"))){
+        initFlag = 2;
+    }
+
+    chkSum = checksum(name);  
+
     struct stat *csvStbuf = NULL;
     csvStbuf = (struct stat *)malloc(sizeof(*csvStbuf));
     if (NULL == csvStbuf){
-        fprintf(stderr, "malloc: can't allocate memory for *pStbuf\n");
+        fprintf(stderr, "malloc: can't allocate memory for *csvStbuf\n");
         return;
-    }   
+    }
+
     FILE *fp;
-    char csvFilenameExt[NAME_MAX];
-    char csvFilename[NAME_MAX];
-    fp = fopen(CSV_FILE_NAME, "r");
-    if(NULL == fp){
+    fp = fopen(CSV_FILE_NAME, "a+");
+    if (NULL == fp){
         fprintf(stderr, "Failed to open file %s.\n");
         return;
     }
-    
-    char *search = itoa(stbuf.st_ino, 10);
-    char line[MAX_PATH];
-    int flag = 0;
-    while (fgets(line, sizeof(line), fp)){
-        if (strstr(line, search)){
-            flag = 1;
-            printf("File found in CSV: %s", line);
-            timeinfo = localtime (&stbuf.st_mtime);
-            strftime(buff, sizeof(buff), "%b %d %H:%M", timeinfo);
-            printf("File last modified on: %s\n", buff);
-            timeinfo = localtime (&stbuf.st_atime);
-            strftime(buff, sizeof(buff), "%b %d %H:%M", timeinfo);
-            printf("File last accessed on: %s\n", buff);
-            char *bname;
-            char *path2 = strdup(name);
-            bname = basename(path2);
-            char *fileNameExt = getFileExt(bname);
-            stripExt(bname);
-            char *ptr;
-            ptr = realpath(name, NULL);
-            printf("File full path: %s\n", ptr);
-            printf("File name: %s\n", bname);
-            printf("File extension: %s\n", fileNameExt);
-            printf("File size: %ld bytes\n", stbuf.st_size);
-            printf("\n");
-            free(path2);
-            free(ptr);
-        } 
-    }
-    if (flag == 0){
-        printf("The file is not in the CSV file. Entering...\n");
-        timeinfo = localtime (&stbuf.st_mtime);
-        strftime(buff, sizeof(buff), "%b %d %H:%M", timeinfo);
-        printf("File last modified on: %s\n", buff);
-        timeinfo = localtime (&stbuf.st_atime);
-        strftime(buff, sizeof(buff), "%b %d %H:%M", timeinfo);
-        printf("File last accessed on: %s\n", buff);
-        fclose(fp);
-        chkSum = checksum(name);
-        fp = fopen(CSV_FILE_NAME, "a");
-        if(NULL == fp){
-            fprintf(stderr, "Failed to open file %s.\n");
-            return;
+
+    if ((initFlag == 2)){
+        /* checks, by comparing inode, if the file is already in the CSV list */
+        char *search = itoa(stbuf.st_ino, 10);
+        printf("INODE: %s\n", search);
+        char line[MAX_PATH];
+        while (fgets(line, sizeof(line), fp)){
+            if (strstr(line, search)){
+                printf("File found in CSV: %s", line);
+                fileEnteredInCSV = 1;
+            }
         }
-        char *ptr;
-        ptr = realpath(name, NULL);
-        char *bname;
-        char *path2 = strdup(name);
-        bname = basename(path2);
-        char *fileNameExt = getFileExt(bname);
-        stripExt(bname);
+    }
+
+    char *ptr;
+    ptr = realpath(name, NULL);
+    char *bname;
+    char *path2 = strdup(name);
+    /* strips the path */
+    bname = basename(path2);
+    char *fileNameExt = getFileExt(bname);
+    stripExt(bname);
+    
+    if((initFlag == 0) && (flag == 0)){
+        /* if 1st write to CSV, fprint the HEADER */
+        fprintf(fp, FORMAT_CVS_HEADER);
+        flag++;
+    }
+
+    if (initFlag == 0){
         fseek(fp, 0, SEEK_SET);
         fprintf(fp, FORMAT_CVS_BODY, bname, fileNameExt, stbuf.st_size, chkSum, stbuf.st_ino);
-        printf("File full path: %s\n", ptr);
-        printf("File name: %s\n", bname);
-        printf("File extension: %s\n", fileNameExt);
-        printf("File size: %ld bytes\n", stbuf.st_size);
-        printf("Checksum: %02x\n", chkSum);
         free(path2);
-        free(ptr);       
+        free(ptr);
+        free(csvStbuf);
+        fclose(fp);
+        return;
+    }    
+
+    if ((fileEnteredInCSV == 0) && (initFlag == 2)){
+        printf("The file is not in the CSV file. Entering...\n");
+        fseek(fp, 0, SEEK_SET);
+        fprintf(fp, FORMAT_CVS_BODY, bname, fileNameExt, stbuf.st_size, chkSum, stbuf.st_ino);
     }
+
+    /* printing file info */
+    printf("File full path: %s\n", ptr);
+    printf("File name: %s\n", bname);
+    printf("File extension: %s\n", fileNameExt);
+    printf("File size: %ld bytes\n", stbuf.st_size);
+    /* time conversion */
+    timeinfo = localtime (&stbuf.st_ctime);
+    strftime(buff, sizeof(buff), "%b %d %H:%M", timeinfo);
+    printf("File last status change on: %s\n", buff);
+    timeinfo = localtime (&stbuf.st_mtime);
+    strftime(buff, sizeof(buff), "%b %d %H:%M", timeinfo);
+    printf("File last modified on: %s\n", buff);
+    timeinfo = localtime (&stbuf.st_atime);
+    strftime(buff, sizeof(buff), "%b %d %H:%M", timeinfo);
+    printf("File last accessed on: %s\n", buff);
+    printf("Checksum: %02x\n", chkSum);
+    printf("\n");
+    free(path2);
+    free(ptr);
     free(csvStbuf);
-    fclose(fp);    
+    fclose(fp);
 }
 
 /* returns the file extension */

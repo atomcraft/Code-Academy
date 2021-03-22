@@ -1,37 +1,5 @@
 #include "files_check.h"
 
-void fileInfo(char *name){
-    char buff[20];
-    struct tm * timeinfo;
-    struct stat stbuf;
-    if (stat(name, &stbuf) == -1){
-        fprintf(stderr, "fileInfo: can't access %s\n", name);
-        return;
-    }
-    if ((stbuf.st_mode & __S_IFMT) == __S_IFDIR){
-        fprintf(stderr, "directory: cannot compare directories\n");
-        return;
-    }
-    char *ptr;
-    ptr = realpath(name, NULL);
-    printf("File full path: %s\n", ptr);
-    printf("File name: %s\n", name);
-    printf("File size: %ld bytes\n", stbuf.st_size);
-
-    timeinfo = localtime (&stbuf.st_ctime);
-    strftime(buff, sizeof(buff), "%b %d %H:%M", timeinfo);
-    printf("File created on: %s\n", buff);
-    timeinfo = localtime (&stbuf.st_mtime);
-    strftime(buff, sizeof(buff), "%b %d %H:%M", timeinfo);
-    printf("File last modified on: %s\n", buff);
-    timeinfo = localtime (&stbuf.st_atime);
-    strftime(buff, sizeof(buff), "%b %d %H:%M", timeinfo);
-    printf("File last accessed on: %s\n", buff);
-    printf("\n");
-    free(ptr);
-}
-
-
 void iNotifyEventWatch(char *path){
     int inotifyFd, wd, j;
     char buf[BUF_LEN] __attribute__ ((aligned(8)));
@@ -47,7 +15,6 @@ void iNotifyEventWatch(char *path){
     }
 
     /* For each command-line argument, add a watch for all events */
-
     wd = inotify_add_watch(inotifyFd, path, IN_ALL_EVENTS);
         if (wd == -1){
             fprintf(stderr, "inotify_add_watch: failed!");
@@ -68,7 +35,6 @@ void iNotifyEventWatch(char *path){
             exit(-1);
         }
 
-        /*FIXME: should use %zd here, and remove (long) cast */
         printf("Read %zd bytes from inotify fd\n", numRead);
 
         /* Process all of the events in buffer returned by read() */

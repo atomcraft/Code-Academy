@@ -37,12 +37,12 @@ int main(int argc, char **argv){
         } else if ((0 == strcmp(argv[1], "-fc"))){
             if(access(CSV_FILE_NAME, F_OK) == 0){
                 while (--argc > 1){
-                    csvFileModificationCheck(argv[++i]);
+                    fileCheckInfoCsvParse(argv[++i], argv[1]);
                     continue;
                 }
             } else{
                 while (--argc > 1){
-                    fsize(argv[++i]);
+                    fileCheckInfoCsvParse(argv[++i], argv[1]);
                     continue;
                 }
             }
@@ -51,7 +51,7 @@ int main(int argc, char **argv){
             continue;
         } else if ((0 == strcmp(argv[1], "-f"))){
             while (--argc > 1){
-                fileInfo(argv[++i]);
+                fileCheckInfoCsvParse(argv[++i], argv[1]);
                 continue;   
             }            
         } else{

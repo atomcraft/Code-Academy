@@ -28,30 +28,25 @@
    static const char *FORMAT_CVS_HEADER = "Name, Extension, Size, Checksum, Inode\n";
    static const char *FORMAT_CVS_BODY = "%s, %s, %lld, %02x, %u\n"; 
 
-//    unsigned char md5ChecksumArr[MD5_DIGEST_LENGTH] = {0};
-
-   /* creates the CSV file list */
-   void csvParser(struct stat stbuf, char *name);
-   /* checks if file is already in the CSV list, if not adds it, if yes shows info */
-   void csvFileModificationCheck(char *name);
+   /* Lists program usage */
+   int help();
+   /* fsize: print inode #, (mode, links,) size of file "name" */
+   void fsize(char *name);
+   /* directory walker, alks the directory and sub-directories */
+   void dirwalk(char *, void (*fcn)(char *));
+   /* creates/modifies the CSV file list, compares and prints file info */
+   void fileCheckInfoCsvParse(char *name, char *argv);
    /* returns the file extension */
    char *getFileExt(const char *filename);
    /* removes the file extension */
    void stripExt(char *fname);
    /* integer to char converter */
-   char* itoa(int val, int base);
-   /* directory walker, alks the directory and sub-directories */
-   void dirwalk(char *, void (*fcn)(char *));
+   char* itoa(int val, int base);   
    /* creates the checksum */
-   unsigned int checksum (char *name);
-   /* fsize: print inode #, mode, links, size of file "name" */
-   void fsize(char *name);
+   unsigned int checksum (char *name); 
    /*creates the iNotify Event Watch */
    void iNotifyEventWatch(char *name);
    /* displays iNotify Events */
    static void displayInotifyEvent(struct inotify_event *i);
-   /* compares files */
-   void fileInfo(char *name);
-   /* Lists program usage */
-   int help();
+
 #endif
