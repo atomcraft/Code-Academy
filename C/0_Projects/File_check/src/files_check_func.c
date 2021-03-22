@@ -111,19 +111,6 @@ void fileCheckInfoCsvParse(char *name, char *argv){
         return;
     }
 
-    if ((initFlag == 2)){
-        /* checks, by comparing inode, if the file is already in the CSV list */
-        char *search = itoa(stbuf.st_ino, 10);
-        printf("INODE: %s\n", search);
-        char line[MAX_PATH];
-        while (fgets(line, sizeof(line), fp)){
-            if (strstr(line, search)){
-                printf("File found in CSV: %s", line);
-                fileEnteredInCSV = 1;
-            }
-        }
-    }
-
     char *ptr;
     ptr = realpath(name, NULL);
     char *bname;
@@ -133,6 +120,24 @@ void fileCheckInfoCsvParse(char *name, char *argv){
     char *fileNameExt = getFileExt(bname);
     stripExt(bname);
     
+    if ((initFlag == 2)){
+        /* checks, by comparing inode, if the file is already in the CSV list */
+        char *search = itoa(stbuf.st_ino, 10);
+        char line[MAX_PATH];
+        while (fgets(line, sizeof(line), fp)){
+            if (strstr(line, search)){
+                printf("File found in CSV: %s", line);
+                fileEnteredInCSV = 1;
+                if (!(strstr(line, name))){
+                    fseek(fp, line, SEEK_SET);
+                    fprintf(fp, FORMAT_CVS_BODY, bname, fileNameExt, stbuf.st_size, chkSum, stbuf.st_ino);
+                }
+                
+            }
+        }
+    }
+
+
     if((initFlag == 0) && (flag == 0)){
         /* if 1st write to CSV, fprint the HEADER */
         fprintf(fp, FORMAT_CVS_HEADER);
