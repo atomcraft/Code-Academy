@@ -3,6 +3,7 @@
 #Directories
 Strypes/
 Temp/
+tlpi-201025-dist/
 
 # Object files
 *.o
