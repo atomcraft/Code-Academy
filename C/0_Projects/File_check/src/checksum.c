@@ -1,5 +1,6 @@
 #include "files_check.h"
 
+/* generates a file checksum based on file name */
 unsigned int checksum (char *name){
     FILE *fp;
     size_t len;

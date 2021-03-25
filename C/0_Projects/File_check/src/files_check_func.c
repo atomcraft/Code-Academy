@@ -3,13 +3,13 @@
 /* Lists program usage */
 int help(){
     printf("Usage: \n");
-    printf("\tfiles_check.out [-c ] <path/directory> or <file>\n");
+    printf("\tfiles_check [-c ] <path/directory> or <file>\n");
     printf("\t-c: creates CSV file list with file name, extension, size, MD5 checksum. iNode\n\n");
-    printf("\tfiles_check.out [-fc ] <file>\n");
+    printf("\tfiles_check [-fc ] <file>\n");
     printf("\t-fc: checks if the file/s is included in the CSV file, if not it adds it. It shows last modification time, last access time, full path, name, extension, size\n\n");
-    printf("\tfiles_check.out [-e ] optional: <path/directory> or <file>\n");
+    printf("\tfiles_check [-e ] optional: <path/directory> or <file>\n");
     printf("\t-e: enters events watch mode, show modifications, access as it happens. Press Ctrl+C to terminate\n\n");
-    printf("\tfiles_check.out [-f ] <file1> <file2>\n");
+    printf("\tfiles_check [-f ] <file1> <file2>\n");
     printf("\t-f: shows/compares 2 files, their last modification/creation/access time, full path, name, extension, size\n\n");
     return 1;
 }
