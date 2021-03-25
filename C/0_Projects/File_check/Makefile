@@ -2,7 +2,7 @@ CC := gcc
 LIBFLAGS := 
 CFLAGS := -g
 LDLIBS :=  
-TARGET ?= files_check.out
+TARGET ?= files_check
 BUILD_DIR ?= ./build
 SRC_DIRS ?= ./src
 

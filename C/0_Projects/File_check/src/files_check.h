@@ -39,7 +39,7 @@
    /* returns the file extension */
    char *getFileExt(const char *filename);
    /* removes the file extension */
-   void stripExt(char *fname);
+   void stripExt(char *filename);
    /* integer to char converter */
    char* itoa(int val, int base);   
    /* creates the checksum */
@@ -49,4 +49,4 @@
    /* displays iNotify Events */
    static void displayInotifyEvent(struct inotify_event *i);
 
-#endif
+#endif /* FILES_CHECK_H_ */

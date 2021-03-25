@@ -73,7 +73,6 @@ void fileCheckInfoCsvParse(char *name, char *argv){
     char buff[CHAR_BUF];
     struct tm * timeinfo;
     struct stat stbuf;
-    static int flag = 0;
     unsigned int chkSum = 0;
     /* checks if file/directory exists */
     if(access(name, F_OK) != 0){
@@ -103,6 +102,7 @@ void fileCheckInfoCsvParse(char *name, char *argv){
         fprintf(stderr, "malloc: can't allocate memory for *csvStbuf\n");
         return;
     }
+    stat(CSV_FILE_NAME, csvStbuf);
 
     FILE *fp;
     fp = fopen(CSV_FILE_NAME, "a+");
@@ -118,30 +118,11 @@ void fileCheckInfoCsvParse(char *name, char *argv){
     /* strips the path */
     bname = basename(path2);
     char *fileNameExt = getFileExt(bname);
-    stripExt(bname);
-    
-    if ((initFlag == 2)){
-        /* checks, by comparing inode, if the file is already in the CSV list */
-        char *search = itoa(stbuf.st_ino, 10);
-        char line[MAX_PATH];
-        while (fgets(line, sizeof(line), fp)){
-            if (strstr(line, search)){
-                printf("File found in CSV: %s", line);
-                fileEnteredInCSV = 1;
-                if (!(strstr(line, name))){
-                    fseek(fp, line, SEEK_SET);
-                    fprintf(fp, FORMAT_CVS_BODY, bname, fileNameExt, stbuf.st_size, chkSum, stbuf.st_ino);
-                }
-                
-            }
-        }
-    }
+    stripExt(bname); 
 
-
-    if((initFlag == 0) && (flag == 0)){
+    if((csvStbuf->st_size == 0)){
         /* if 1st write to CSV, fprint the HEADER */
         fprintf(fp, FORMAT_CVS_HEADER);
-        flag++;
     }
 
     if (initFlag == 0){
@@ -152,6 +133,19 @@ void fileCheckInfoCsvParse(char *name, char *argv){
         free(csvStbuf);
         fclose(fp);
         return;
+    }
+
+    if ((initFlag == 2)){
+        /* checks, by comparing inode, if the file is already in the CSV list */
+        fseek(fp, 0, SEEK_SET);
+        char *search = itoa(stbuf.st_ino, 10);
+        char line[MAX_PATH];       
+        while (fgets(line, sizeof(line), fp)){
+            if (strstr(line, search)){
+                printf("File found in CSV: %s", line);
+                fileEnteredInCSV = 1;                
+            }    
+        }
     }    
 
     if ((fileEnteredInCSV == 0) && (initFlag == 2)){
@@ -191,12 +185,12 @@ char *getFileExt(const char *filename){
 }
 
 /* removes the file extension */
-void stripExt(char *fname){
-    char *end = fname + strlen(fname);
-    while (end > fname && *end != '.') {
+void stripExt(char *filename){
+    char *end = filename + strlen(filename);
+    while (end > filename && *end != '.') {
         --end;
     }
-    if (end > fname) {
+    if (end > filename) {
         *end = '\0';
     }
 }
@@ -210,3 +204,4 @@ char* itoa(int val, int base){
     }
 	return &buf[i+1];
 }
+
