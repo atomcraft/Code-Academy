@@ -27,7 +27,7 @@ void fsize(char *name){
         dirwalk(name, fsize);
     }
 
-    fileCheckInfoCsvParse(name, "c");
+    fileCheckInfoCsvParse(name, "-c");
 
     if (flag == 0){
         printf("iNode");
