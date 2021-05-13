@@ -1,0 +1,11 @@
+mkdir $HOME/projects/            
+mkdir $HOME/projects/houses/     
+mkdir $HOME/projects/houses/doors
+cd $HOME/projects/houses/doors
+touch $HOME/projects/houses/bungalow.txt
+touch $HOME/projects/houses/doors/bifold.txt
+mkdir -p  $HOME/projects/outdoors/vegetation/
+touch $HOME/projects/outdoors/vegetation/landscape.txt
+cp ~/projects/house1 ~/projects/houses/
+cp ~/projects/house5 ~/projects/houses/
+rm -fr house{6..8}  
