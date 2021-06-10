@@ -1,0 +1,8 @@
+test1=4095
+exp1=3847
+test2=1111
+exp2=1031
+test3=-1
+exp3=-249
+test4=D
+exp4=123456
