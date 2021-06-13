@@ -2,14 +2,18 @@
 gcc task9.c -o rez
 source test_data
 check_exit_status () {
-if [ "$READ" -ne "0" ]
-        then
-                echo "Error"
-        else
-                echo "Passed"
-        fi
+	if [ "$READ" -ne "0" ]
+	then
+		if [ "$READ" -eq "1" ]
+      		then	
+        	       	echo "Error! Provided number does not match expected output!"
+        	else
+        	        echo "Unknown Error"
+        	fi
+	else
+        	echo "Passed"
+	fi
 }
-
 for test in "$test_data1"
 do
         ./rez $test1 $exp1
