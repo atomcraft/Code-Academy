@@ -1,0 +1,27 @@
+#!/bin/bash
+gcc task5.c -o rez
+source test_data
+check_exit_status(){
+if [ "$READ" -eq "0" ]
+then
+        echo "Passed"
+        printf "\n"
+elif [ "$READ" -eq "1" ]
+then
+       	echo "Script Error: Point a is outside the matrix!"
+elif [ "$READ" -eq "2" ]
+then
+	echo "Script Error: Point b is outside the matrix!"
+else
+	echo "Unknown error"
+fi
+}
+./rez $ax1 $ay1 $bx1 $by1
+READ=$?
+check_exit_status READ
+./rez $ax2 $ay2 $bx2 $by2
+READ=$?
+check_exit_status READ
+./rez $ax3 $ay3 $bx3 $by3
+check_exit_status READ
+exit 0
