@@ -1,0 +1,37 @@
+#!/bin/bash
+gcc task13.c -o rez
+
+check_exit_status(){
+if [ "$READ" -eq "0" ]
+then
+        echo "Passed"
+        printf "\n"
+elif [ "$READ" -eq "1" ]
+then
+       	echo "Script Error: Please provide file name!"
+       	printf "\n"
+elif [ "$READ" -eq "2" ]
+then
+	echo "Script Error: Passed more than one file names!"
+	printf "\n"
+elif [ "$READ" -eq "3" ]
+then
+	echo "Script Error: Error: File does not exist!"
+	printf "\n"
+elif [ "$READ" -eq "4" ]
+then
+	echo "Error: Could not open file!"
+	printf "\n"
+elif [ "$READ" -eq "5" ]
+then
+	echo "Error: File not closed successully!"
+	printf "\n"
+else
+	echo "Unknown error"
+	printf "\n"
+fi
+}
+./rez $*
+READ=$?
+check_exit_status READ
+exit 0
