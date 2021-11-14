@@ -2,8 +2,8 @@
 
 ## Testing 
 
-##On Linux automated way:
-#for building the game run:
+## On Linux automated way:
+# for building the game run:
 
 ./build.sh
 
@@ -11,22 +11,23 @@
 
 ./run.sh
 
-#to start the game
+# to start the game
 
 
-##On Linux manual way:
-#for building the game run:
+## On Linux manual way:
+# for building the game run:
 
-mkdir build (if it does not exists already)
+(if it does not exists already):
+
+mkdir build 
 cd build
 cmake ..
 
-#after the build finishes, run:
+# after the build finishes, run:
 
 make -j
 
 # to compile the project
-
 
 ##To execute the program (run from within build folder):
 ./chess 
